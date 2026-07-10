@@ -37,7 +37,7 @@ body {
     justify-content: center;
     overflow: hidden;
     font-family: 'Inter', sans-serif;
-    font-weight: 400; /* Mặc định chữ phụ dùng Inter 400 */
+    font-weight: 400;
 }
 
 .wrap {
@@ -63,22 +63,22 @@ body {
     margin: 0;
     font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    font-size: 28px;
-    color: var(--accent); /* Điểm nhấn xanh biển */
+    font-size: 26px;
+    color: var(--accent);
 }
 
 .top-actions { display: flex; gap: 8px; align-items: center; }
 
 .top .btn-add {
-    height: 38px;
+    height: 36px;
     padding: 0 14px;
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 30px;
     background: rgba(255, 255, 255, 0.5);
     color: var(--accent);
     font-family: 'Outfit', sans-serif;
-    font-weight: 600; /* Nút phụ dùng Outfit 600 */
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 13px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -87,23 +87,23 @@ body {
 }
 .top .btn-add:active { transform: scale(0.95); background: rgba(255, 255, 255, 0.8); }
 
-/* LƯỚI CONTAINER TỰ ĐỘNG CHIA ĐỀU KHÔNG GIAN KHÔNG TRÀN */
+/* DANH SÁCH THẺ CƠ THỦ */
 #list {
     display: flex;
     flex-direction: column;
     gap: 14px;
     flex: 1;
-    margin-bottom: 110px; /* Nhường chỗ cho bottom bar */
+    margin-bottom: 75px; /* TĂNG PADDING AN TOÀN ĐỂ KHÔNG BỊ PHẦN TỔNG ĐIỂM ĐÈ LÊN KHU VỰC ĐIỀU KHIỂN */
     min-height: 0;
 }
 
-/* CARD KÍNH TRẮNG MỜ + BO GÓC 35PX + BÓNG MỀM CO CAO CẤP */
+/* CARD KÍNH TRẮNG MỜ + BO GÓC 35PX */
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 35px; /* Yêu cầu bo góc lớn 35px */
+    border-radius: 35px;
     padding: 14px 20px;
     position: relative;
     display: flex;
@@ -111,7 +111,7 @@ body {
     justify-content: space-between;
     flex: 1;
     min-height: 0;
-    box-shadow: 0 15px 35px rgba(31, 38, 135, 0.04); /* Bóng mềm */
+    box-shadow: 0 15px 35px rgba(31, 38, 135, 0.04);
 }
 
 .card-top-row {
@@ -121,7 +121,7 @@ body {
     flex-shrink: 0;
 }
 
-/* TÊN CƠ THỦ (OUTFIT 600) */
+/* TÊN CƠ THỦ */
 .player-info {
     width: 55%;
     min-width: 0;
@@ -132,7 +132,7 @@ input.name {
     color: var(--text-main);
     font-family: 'Outfit', sans-serif;
     font-weight: 600; 
-    font-size: 20px;
+    font-size: 18px;
     width: 100%;
     padding: 2px 0;
     text-align: left;
@@ -142,7 +142,7 @@ input.name {
 }
 input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
 
-/* LỊCH SỬ DẠNG DANH SÁCH NHỎ (INTER 400) */
+/* LỊCH SỬ THAY ĐỔI ĐIỂM */
 .history-box {
     display: flex;
     gap: 4px;
@@ -153,7 +153,7 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
 }
 .log-tag {
     font-family: 'Inter', sans-serif;
-    font-weight: 400; /* Yêu cầu chữ phụ Inter 400 */
+    font-weight: 400;
     font-size: 11px;
     padding: 2px 7px;
     border-radius: 8px;
@@ -162,12 +162,12 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
     animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
 }
 
-/* SỐ ĐIỂM: 110PX XANH ĐẬM #111827 (OUTFIT 800) */
+/* SỐ ĐIỂM CƠ THỦ */
 .score-display {
     font-family: 'Outfit', sans-serif;
-    font-weight: 800; /* Yêu cầu số điểm Outfit 800 */
+    font-weight: 800;
     font-size: 110px; 
-    font-size: min(110px, 15vh); /* Tự động co giãn theo chiều cao màn hình để không bị dính */
+    font-size: min(110px, 14vh);
     text-align: center;
     color: var(--text-main);
     line-height: 1;
@@ -175,7 +175,7 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
     user-select: none;
 }
 
-/* NÚT BẤM DẠNG PILL (VIÊN THUỐC) - OUTFIT 600 */
+/* NÚT ĐIỀU KHIỂN DẠNG PILL */
 .controls { 
     display: flex; 
     gap: 14px; 
@@ -185,13 +185,13 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
 
 .btn {
     flex: 1;
-    max-width: 130px;
-    height: 40px;
+    max-width: 120px;
+    height: 38px;
     border: none;
-    border-radius: 100px; /* Dạng viên thuốc (pill) */
+    border-radius: 100px;
     font-family: 'Outfit', sans-serif;
-    font-weight: 600; /* Yêu cầu nút Outfit 600 */
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 16px;
     color: white;
     cursor: pointer;
     display: flex;
@@ -199,15 +199,11 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
     justify-content: center;
     transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.4);
 }
+.btn:active { transform: scale(0.86); }
+.btn-minus { background: var(--btn-minus); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); }
+.btn-plus { background: var(--btn-plus); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2); }
 
-/* Animation khi bấm nảy nhẹ cực đã tay */
-.btn:active { 
-    transform: scale(0.86); 
-}
-.btn-minus { background: var(--btn-minus); box-shadow: 0 6px 15px rgba(239, 68, 68, 0.2); }
-.btn-plus { background: var(--btn-plus); box-shadow: 0 6px 15px rgba(34, 197, 94, 0.2); }
-
-/* THAO TÁC XÓA (VUỐT HOẶC HOVER THẤY KHÁ ĐẸP) */
+/* NÚT XÓA */
 .card-actions {
     position: absolute;
     bottom: 12px;
@@ -217,7 +213,6 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
     transition: opacity 0.2s;
 }
 .card:hover .card-actions, .card:active .card-actions { opacity: 1; }
-
 .del-btn {
     background: none;
     border: none;
@@ -229,70 +224,78 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
     padding: 0;
 }
 
-.icon { width: 15px; height: 15px; fill: currentColor; }
-.btn-icon { width: 20px; height: 20px; fill: currentColor; }
+.icon { width: 14px; height: 14px; fill: currentColor; }
+.btn-icon { width: 18px; height: 18px; fill: currentColor; }
 
-/* BOTTOM DASHBOARD */
+/* TỔNG ĐIỂM TOÀN BÀN THU NHỎ - DẠNG DYNAMIC ISLAND LƠ LỬNG */
 .total {
     position: fixed;
-    bottom: 0;
+    bottom: calc(12px + env(safe-area-inset-bottom)); /* Cách đáy màn hình, né tai thỏ dưới */
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    max-width: 480px;
-    background: rgba(255, 255, 255, 0.4);
+    width: calc(100% - 32px);
+    max-width: 400px; /* Bóp nhỏ chiều rộng */
+    background: rgba(255, 255, 255, 0.65); /* Tăng độ mờ trong suốt để nhìn xuyên thấu phía sau */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 8px 16px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Chuyển sang dạng hàng ngang dàn đều cực gọn */
     align-items: center;
-    gap: 4px;
+    justify-content: space-between;
     z-index: 999;
-    border-radius: 35px 35px 0 0; /* Bo góc trên đồng bộ */
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.02);
+    border-radius: 50px; /* Bo tròn hoàn toàn thành một viên thuốc lơ lửng */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
+
+.total-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .total-label {
     font-family: 'Inter', sans-serif;
-    font-weight: 400; /* Chữ phụ Inter 400 */
+    font-weight: 400;
     font-size: 11px;
     color: #4b5563;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
 }
 
 .glow-circle {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    min-width: 120px;
-    height: 36px;
-    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0,0,0,0.03);
+    padding: 2px 12px;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .big { 
     font-family: 'Outfit', sans-serif;
-    font-weight: 800; /* Số điểm tổng Outfit 800 */
-    font-size: 22px; 
-    color: var(--accent); /* Đổi màu đồng bộ điểm nhấn */
+    font-weight: 800;
+    font-size: 16px; 
+    color: var(--accent);
 }
 
 .total button.btn-reset {
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0,0,0,0.05);
     color: #4b5563;
     font-family: 'Outfit', sans-serif;
-    font-weight: 600; /* Nút phụ dùng Outfit 600 */
-    font-size: 13px;
+    font-weight: 600;
+    font-size: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 10px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    transition: background-color 0.15s, transform 0.15s;
 }
-.total button.btn-reset:active { color: var(--btn-minus); transform: scale(0.95); }
+.total button.btn-reset:active { color: var(--btn-minus); transform: scale(0.95); background: rgba(255, 255, 255, 0.9); }
 
 @keyframes popIn {
     from { opacity: 0; transform: scale(0.8) translateY(4px); }
@@ -315,25 +318,28 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--accent); }
     <div id="list"></div>
 </div>
 
+<!-- CONTAINER ĐƯỢC THU NHỎ THÀNH FLOATING PILL GỌN GÀNG -->
 <div class="total">
-    <div class="total-label">Tổng số điểm toàn bàn</div>
-    <div class="glow-circle">
-        <div id="tot" class="big">0</div>
+    <div class="total-left">
+        <div class="total-label">Tổng bàn:</div>
+        <div class="glow-circle">
+            <div id="tot" class="big">0</div>
+        </div>
     </div>
     <button class="btn-reset" onclick="reset()">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg> Làm mới trận
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg> Làm mới
     </button>
 </div>
 
 <script>
 let a = [{"name":"Cơ thủ 1","score":0,"history":[]},{"name":"Cơ thủ 2","score":0,"history":[]}];
 
-if(localStorage.bida_ios_premium) {
-    try { a = JSON.parse(localStorage.bida_ios_premium); } catch(e) {}
+if(localStorage.bida_ios_premium_v5) {
+    try { a = JSON.parse(localStorage.bida_ios_premium_v5); } catch(e) {}
 }
 
 function save(){ 
-    localStorage.bida_ios_premium = JSON.stringify(a); 
+    localStorage.bida_ios_premium_v5 = JSON.stringify(a); 
 }
 
 function draw(){
@@ -343,7 +349,7 @@ function draw(){
     let t = 0;
     a.forEach((x, i) => {
         t += x.score;
-        if(!x.history) x.history = []; // Bảo vệ dữ liệu cũ
+        if(!x.history) x.history = [];
         
         listNode.innerHTML += `
         <div class="card">
@@ -380,9 +386,8 @@ function draw(){
 
 function chg(i, d){
     a[i].score += d;
-    // Ghi nhận lịch sử dạng tag nhỏ nhỏ (+1, -1)
     a[i].history.push(d > 0 ? `+${d}` : `${d}`);
-    if(a[i].history.length > 3) a[i].history.shift(); // Lưu tối đa 3 hoạt động gần nhất
+    if(a[i].history.length > 3) a[i].history.shift();
     draw();
 }
 
