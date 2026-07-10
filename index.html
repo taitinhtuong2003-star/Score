@@ -121,17 +121,17 @@ body {
 }
 .top button:active { transform: scale(0.95); opacity: 0.9; }
 
-/* DANH SÁCH CUỘN KHÔNG GIỚI HẠN */
+/* DANH SÁCH TỰ ĐỘNG CO GIÃN ĐẦY MÀN / CUỘN KHI FULL */
 #list {
     display: flex;
     flex-direction: column;
     gap: 12px;
     flex: 1;
     margin-bottom: 16px;
-    overflow-y: auto;   /* Cho phép cuộn khi tràn màn hình */
-    padding-right: 2px; /* Chừa khoảng nhỏ tránh lệch hiệu ứng */
+    overflow-y: auto;   /* Kích hoạt tự động cuộn khi nội dung tràn */
+    padding-right: 2px;
     
-    /* Ẩn thanh cuộn mặc định của trình duyệt để giữ độ đẹp của kính mờ */
+    /* Ẩn thanh cuộn trình duyệt */
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -139,20 +139,23 @@ body {
     display: none;
 }
 
-/* THẺ CƠ THỦ KÍNH MỜ CỐ ĐỊNH CHIỀU CAO VỪA VẶN */
+/* THẺ CƠ THỦ THAY ĐỔI LINH HOẠT THEO DIỆN TÍCH MÀN HÌNH */
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 24px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     position: relative;
     display: flex;
     align-items: center;
-    height: 85px; /* Chiều cao cố định lý tưởng để cuộn mượt */
+    
+    /* Bộ đôi quyết định tính năng: */
+    flex: 1;            /* Ít người: Tự động chia đều chiều cao để đầy màn hình */
+    min-height: 75px;   /* Nhiều người: Khống chế chiều cao tối thiểu để không bị bóp nát, ép danh sách phải sinh thanh cuộn */
+    
     box-shadow: var(--card-shadow);
     border: 1px solid var(--card-border);
-    flex-shrink: 0; /* Không cho thẻ bị bóp méo khi danh sách dài ra */
 }
 
 /* TÊN CHIẾM 45% */
@@ -170,7 +173,7 @@ input.name {
     color: var(--text-main);
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
-    font-size: 20px;
+    font-size: clamp(16px, 4vh, 22px); /* Tự động co nhỏ chữ lại khi màn hình hẹp */
     width: 100%;
     padding: 2px 0;
     text-align: left;
@@ -190,8 +193,8 @@ input.name:focus { outline: none; border-bottom: 2px solid #6366f1; }
 }
 
 .inline-controls button {
-    width: 44px;
-    height: 44px;
+    width: clamp(38px, 6vh, 46px); /* Nút tự co giãn theo chiều cao */
+    height: clamp(38px, 6vh, 46px);
     border: 1px solid var(--card-border);
     border-radius: 30px;
     cursor: pointer;
@@ -217,15 +220,15 @@ body.dark-theme .p { color: #0f172a !important; }
     text-align: center;
     font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    font-size: 38px; 
+    font-size: clamp(32px, 6vh, 46px); /* Điểm số tự động thu nhỏ nếu thẻ bị nén lại */
     line-height: 1;
     letter-spacing: -1px;
 }
 
-/* THAO TÁC PHỤ NẰM GỌN GÀNG */
+/* THAO TÁC PHỤ */
 .card-actions {
     position: absolute;
-    top: 6px;
+    top: 4px;
     right: 18px;
     z-index: 2;
     opacity: 0.3;
@@ -239,7 +242,7 @@ body.dark-theme .p { color: #0f172a !important; }
     color: #ef4444;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.5px;
     cursor: pointer;
     padding: 0;
@@ -247,9 +250,9 @@ body.dark-theme .p { color: #0f172a !important; }
 
 /* ICONS */
 .icon { width: 16px; height: 16px; fill: currentColor; }
-.btn-icon { width: 22px; height: 22px; fill: currentColor; }
+.btn-icon { width: 20px; height: 20px; fill: currentColor; }
 
-/* BOTTOM DASHBOARD (NẰM DƯỚI CÙNG TỰ NHIÊN, KHÔNG CHE KHUẤT) */
+/* BOTTOM DASHBOARD */
 .total {
     position: relative;
     width: 100%;
@@ -257,11 +260,11 @@ body.dark-theme .p { color: #0f172a !important; }
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--card-border);
-    padding: 14px 16px;
+    padding: 12px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     z-index: 999;
     border-radius: 24px;
     box-shadow: var(--card-shadow);
@@ -271,7 +274,7 @@ body.dark-theme .p { color: #0f172a !important; }
 .total-label {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -280,8 +283,8 @@ body.dark-theme .p { color: #0f172a !important; }
 .glow-circle {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--card-border);
-    min-width: 140px;
-    height: 40px;
+    min-width: 120px;
+    height: 36px;
     border-radius: 30px;
     display: flex;
     justify-content: center;
@@ -291,7 +294,7 @@ body.dark-theme .p { color: #0f172a !important; }
 .big { 
     font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    font-size: 24px; 
+    font-size: 22px; 
     background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -329,10 +332,8 @@ body.dark-theme .p { color: #0f172a !important; }
         </div>
     </div>
     
-    <!-- Vùng danh sách người chơi tự sinh thanh cuộn -->
     <div id="list"></div>
 
-    <!-- Thanh tổng điểm cố định ngay ngắn ở đáy wrap -->
     <div class="total">
         <div class="total-label">Tổng số điểm toàn bàn</div>
         <div class="glow-circle">
@@ -340,6 +341,7 @@ body.dark-theme .p { color: #0f172a !important; }
         </div>
         <button onclick="reset()">
             <svg class="icon" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg> Làm mới trận
+        </button>
     </div>
 </div>
 
@@ -427,7 +429,6 @@ function add(){
     initRender();
     save();
     
-    // Tự động cuộn xuống dưới cùng danh sách khi thêm người mới
     setTimeout(() => {
         let listNode = document.getElementById('list');
         listNode.scrollTo({ top: listNode.scrollHeight, behavior: 'smooth' });
