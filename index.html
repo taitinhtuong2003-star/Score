@@ -61,11 +61,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-.top-actions {
-    display: flex;
-    gap: 8px;
-}
-
+.top-actions { display: flex; gap: 8px; }
 .top button {
     height: 36px;
     padding: 0 12px;
@@ -125,11 +121,7 @@ body {
 }
 .preset-btn.reset-mode { color: #f43f5e; border-color: rgba(244, 63, 94, 0.2); }
 
-.theme-custom {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-}
+.theme-custom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .theme-item {
     display: flex;
     flex-direction: column;
@@ -148,115 +140,77 @@ body {
     cursor: pointer;
 }
 
-/* LƯỚI CONTAINER HÍT FULL MÀN HÌNH */
+/* LƯỚI CHIA NGANG ĐỀU NHAU FULL MÀN HÌNH */
 #list {
     display: grid;
-    gap: 12px;
+    grid-template-columns: 1fr; /* Luôn là 1 cột dẹt ngang kéo dài */
+    gap: 10px;
     flex: 1;
-    margin-bottom: 110px; /* Tránh đè lên tổng điểm */
+    margin-bottom: 110px; /* Chừa chỗ cho Dashboard tổng */
 }
 
-/* Chia lưới tự động */
+/* Tự động chia tỷ lệ chiều cao (Hàng dọc) bằng nhau dựa vào số lượng người */
 #list.count-1 { grid-template-rows: 1fr; }
-#list.count-2 { grid-template-rows: 1fr 1fr; }
-#list.count-3 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-#list.count-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-#list.count-5, #list.count-6 { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 1fr); }
+#list.count-2 { grid-template-rows: repeat(2, 1fr); }
+#list.count-3 { grid-template-rows: repeat(3, 1fr); }
+#list.count-4 { grid-template-rows: repeat(4, 1fr); }
+#list.count-5 { grid-template-rows: repeat(5, 1fr); }
+#list.count-6 { grid-template-rows: repeat(6, 1fr); }
 
-/* THẺ CƠ THỦ */
+/* THẺ CƠ THỦ DẠNG DẸT NGANG */
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.04);
-    border-radius: 24px;
-    padding: 12px 16px;
+    border-radius: 20px;
+    padding: 8px 16px;
     position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
-    gap: 8px;
+    align-items: center; /* Căn giữa các thành phần theo chiều dọc */
+    justify-content: space-between; /* Đẩy Tên sang trái, Điều khiển sang phải */
+    gap: 12px;
     overflow: hidden;
     height: 100%;
 }
 
-#list.count-3 .card:nth-child(3) {
-    grid-column: span 2;
-}
-
-/* NÚT CHỌN MÀU VÀ XÓA GÓC TRÊN */
-.card-actions {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    display: flex;
-    gap: 6px;
-    z-index: 2;
-}
-
-.color-picker-wrapper {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 1px solid var(--input-border);
+/* BỐ CỤC BÊN TRÁI: CHỨA Ô NHẬP TÊN */
+.player-info {
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.05);
-    font-size: 10px;
-}
-.color-picker-wrapper input[type="color"] {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0; cursor: pointer;
+    min-width: 0; /* Tránh tràn chữ */
 }
 
-.del-btn {
-    background: rgba(244, 63, 94, 0.08);
-    border: 1px solid rgba(244, 63, 94, 0.15);
-    color: #f43f5e;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    font-size: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Ô NHẬP TÊN CƠ THỦ */
 input.name {
     background: none;
     border: none;
     color: inherit;
-    text-align: center;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
-    width: 60%;
-    display: block;
-    margin: 0 auto;
+    width: 100%;
+    padding: 4px 0;
+    text-align: left; /* Tên căn lề trái cực đẹp */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 input.name:focus { outline: none; border-bottom: 2px solid var(--neon-main); }
 
-/* HÀNG CỘNG TRỪ ĐIỂM SỐ GỘP CHUNG ( <  -  0  +  > ) */
+/* BỐ CỤC BÊN PHẢI: BỘ ĐIỀU KHIỂN ĐIỂM SỐ NẰM TRÊN 1 HÀNG */
 .inline-controls {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
-    gap: 12px;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
 .inline-controls button {
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
     border: none;
-    border-radius: 50%; /* Làm nút tròn ôm sát hai bên */
-    font-size: 20px;
+    border-radius: 50%;
+    font-size: 18px;
     font-weight: 800;
     color: #fff;
     cursor: pointer;
@@ -264,7 +218,6 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--neon-main); }
     align-items: center;
     justify-content: center;
     transition: all 0.05s ease;
-    flex-shrink: 0;
 }
 
 .m { background: linear-gradient(180deg, #b91c1c 0%, #991b1b 100%); border-bottom: 3px solid #450a0a; }
@@ -273,20 +226,57 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--neon-main); }
 .p { background: linear-gradient(180deg, #047857 0%, #065f46 100%); border-bottom: 3px solid #022c22; }
 .p:active { border-bottom: 1px solid #022c22; transform: translateY(2px); }
 
-/* ĐIỂM SỐ NẰM CHÍNH GIỮA NÚT CỘNG VÀ TRỪ */
+/* ĐIỂM SỐ CHÍNH GIỮA CỘNG TRỪ */
 .score {
-    flex: 1;
+    min-width: 60px;
     text-align: center;
-    font-size: 46px;
+    font-size: 36px;
     font-weight: 900;
     line-height: 1;
     letter-spacing: -1px;
 }
-/* Thu nhỏ nhẹ font chữ điểm nếu chia nhiều ô lưới */
-.count-3 .score, .count-4 .score, .count-5 .score, .count-6 .score { font-size: 36px; }
-.count-3 .inline-controls button, .count-4 .inline-controls button, .count-5 .inline-controls button, .count-6 .inline-controls button { width: 40px; height: 40px; font-size: 16px; }
 
-/* DASHBOARD TỔNG ĐIỂM CỐ ĐỊNH Ở ĐÁY */
+/* THAY ĐỔI SIZE THEO SỐ LƯỢNG KHI QUÁ ĐÔNG */
+.count-5 .score, .count-6 .score { font-size: 28px; }
+.count-5 .inline-controls button, .count-6 .inline-controls button { width: 36px; height: 36px; font-size: 15px; }
+.count-5 input.name, .count-6 input.name { font-size: 14px; }
+
+/* CÁC NÚT THAO TÁC PHỤ (MÀU + XÓA) ĐƯỢC GOM GỌN XUỐNG GÓC TRÁI DƯỚI */
+.card-actions {
+    position: absolute;
+    top: 4px;
+    left: 16px;
+    display: flex;
+    gap: 12px;
+    z-index: 2;
+    opacity: 0.3; /* Ẩn nhẹ đi để đỡ rối mắt, khi cần chỉnh vẫn thấy rõ */
+    transition: opacity 0.2s;
+}
+.card:hover .card-actions { opacity: 1; }
+
+.color-picker-wrapper {
+    position: relative;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.color-picker-wrapper input[type="color"] {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0; cursor: pointer;
+}
+
+.del-btn {
+    background: none;
+    border: none;
+    color: #f43f5e;
+    font-size: 10px;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* DASHBOARD TỔNG ĐIỂM */
 .total {
     position: fixed;
     bottom: 0;
@@ -377,7 +367,7 @@ input.name:focus { outline: none; border-bottom: 2px solid var(--neon-main); }
         </div>
     </div>
     
-    <!-- CONTAINER THẺ NGƯỜI CHƠI -->
+    <!-- CONTAINER THẺ NGƯỜI CHƠI CHIA HÀNG NGANG ĐỀU NHAU -->
     <div id="list"></div>
 </div>
 
@@ -458,22 +448,26 @@ function draw(){
         t += x.score;
         if(!x.color) x.color = '#38bdf8';
         
-        // CẤU TRÚC HÀNG NGANG: [-] ĐIỂM SỐ [+]
         listNode.innerHTML += `
-        <div class="card" style="border-color: ${x.color}33; box-shadow: 0 10px 20px var(--shadow), 0 0 15px ${x.color}10;">
+        <div class="card" style="border-color: ${x.color}22; box-shadow: 0 4px 15px var(--shadow);">
+            <!-- THAO TÁC PHỤ NẰM ĐỊNH VỊ GÓC TRÁI DƯỚI -->
             <div class="card-actions">
                 <div class="color-picker-wrapper" style="color: ${x.color}">
-                    <i class="fa-solid fa-droplet"></i>
+                    <i class="fa-solid fa-droplet"></i> Đổi màu
                     <input type="color" value="${x.color}" onchange="changeColor(${i}, this.value)">
                 </div>
-                <button class="del-btn" onclick="removePlayer(${i})"><i class="fa-solid fa-trash-can"></i></button>
+                <button class="del-btn" onclick="removePlayer(${i})"><i class="fa-solid fa-trash-can"></i> Xóa</button>
             </div>
-            <div>
+            
+            <!-- BÊN TRÁI: TÊN CƠ THỦ -->
+            <div class="player-info">
                 <input class="name" value="${x.name}" onchange="a[${i}].name=this.value;save()">
             </div>
+            
+            <!-- BÊN PHẢI: BỘ ĐIỀU KHIỂN ĐIỂM SỐ -->
             <div class="inline-controls">
                 <button class="m" onclick="chg(${i},-1)"><i class="fa-solid fa-minus"></i></button>
-                <div class="score" style="color: ${x.color}; text-shadow: 0 2px 10px ${x.color}44;">
+                <div class="score" style="color: ${x.color}; text-shadow: 0 0 10px ${x.color}33;">
                     ${x.score > 0 ? '+' : ''}${x.score}
                 </div>
                 <button class="p" onclick="chg(${i},1)"><i class="fa-solid fa-plus"></i></button>
@@ -496,7 +490,7 @@ function changeColor(i, newColor){
 
 function add(){
     if (a.length >= 6) {
-        alert("Ứng dụng hỗ trợ tối đa gom 6 cơ thủ chung 1 khung hình để đảm bảo hiển thị đẹp nhất!");
+        alert("Ứng dụng hỗ trợ tối đa 6 hàng cơ thủ để hiển thị không bị quá chật!");
         return;
     }
     const colors = ['#38bdf8', '#10b981', '#f43f5e', '#a855f7', '#f59e0b', '#ec4899'];
