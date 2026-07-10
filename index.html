@@ -1,26 +1,333 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Bida Score Premium Luxury</title>
+<!-- FONT CHỮ SORA SANG TRỌNG -->
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- ICON FONTAWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 <style>
-:root{--bg:#0b1220;--card:rgba(255,255,255,.08);--text:#fff;--accent:#5b8cff}
-*{box-sizing:border-box}body{margin:0;font-family:Outfit,sans-serif;background:linear-gradient(160deg,#0b1220,#1b2945);color:#fff}
-.wrap{max-width:700px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;align-items:center}
-.card{background:var(--card);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.08);border-radius:30px;padding:18px;margin:18px 0}
-input.name{width:100%;background:none;border:none;color:#fff;text-align:center;font-size:22px;font-weight:700}
-.score{text-align:center;font-size:100px;font-weight:900;line-height:1;margin:12px 0}
-.controls{display:flex;gap:14px;margin-bottom:12px}.controls button{flex:1;padding:18px;border:none;border-radius:18px;font-size:28px;font-weight:800;color:#fff;cursor:pointer}
-.m{background:#ef4444}.p{background:#22c55e}
-.foul-btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(135deg, #f59e0b, #d97706);cursor:pointer;text-transform:uppercase}
-.total{position:sticky;bottom:10px;background:#111a;backdrop-filter:blur(10px);border-radius:22px;padding:18px;text-align:center;font-size:22px}
-.big{font-size:48px;font-weight:900;margin-bottom:10px}
-.total button{padding:10px 24px;border:none;border-radius:12px;background:#5b8cff;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
-</style></head><body><div class=wrap><div class=top><h2>🎱 Bida Score</h2><button onclick="add()" style="padding:8px 16px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer">+ Người</button></div><div id=list></div><div class=total>Tổng điểm bàn đấu<div id=tot class=big>0</div><button onclick="reset()">Reset</button></div></div>
+:root {
+    --bg: #0d1527;
+    --card-bg: linear-gradient(145deg, #1e293b, #0f172a);
+    --neon-blue: #38bdf8;
+    --neon-green: #10b981;
+    --neon-red: #f43f5e;
+    --shadow: rgba(0, 0, 0, 0.6);
+}
+
+* { box-sizing: border-box; font-family: 'Sora', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+body {
+    margin: 0;
+    background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+    color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 160px;
+}
+
+/* TOP APP BAR */
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.top h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+.top h2 i {
+    color: var(--neon-blue);
+    filter: drop-shadow(0 0 6px var(--neon-blue));
+}
+.top button {
+    padding: 10px 18px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #cbd5e1;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
+    transition: all 0.2s;
+}
+.top button:active { transform: scale(0.95); background: rgba(255,255,255,0.1); }
+
+/* DANH SÁCH THẺ NGƯỜI CHƠI 3D */
+#list { display: flex; flex-direction: column; gap: 20px; }
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: 20px 24px;
+    position: relative;
+    box-shadow: 
+        0 15px 35px var(--shadow),
+        inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+/* NÚT XÓA ICON TRÒN ĐỎ CHÌM */
+.del-btn {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: rgba(244, 63, 94, 0.1);
+    border: 1px solid rgba(244, 63, 94, 0.2);
+    color: #f43f5e;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.del-btn:active { transform: scale(0.85); background: #f43f5e; color: #fff; }
+
+/* KHU VỰC TÊN CƠ THỦ */
+.name-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.name-wrapper i { color: #64748b; font-size: 13px; }
+input.name {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    width: auto;
+    max-width: 150px;
+}
+input.name:focus { outline: none; color: #fff; border-bottom: 2px solid var(--neon-blue); }
+
+/* HIỂN THỊ ĐIỂM SỐ ĐỔ BÓNG NỔI */
+.score {
+    text-align: center;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    margin: 12px 0;
+    color: #ffffff;
+    letter-spacing: -1px;
+    text-shadow: 
+        0 4px 10px rgba(0,0,0,0.5),
+        0 0 20px rgba(255,255,255,0.1);
+}
+
+/* NÚT ĐIỀU KHIỂN KHỐI 3D CHỈ CÓ DẤU + VÀ DẤU - */
+.controls { display: flex; gap: 16px; }
+.controls button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 16px;
+    font-size: 32px; /* Tăng kích thước dấu để nhìn rõ nét */
+    font-weight: 800;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.05s ease;
+}
+
+/* Nút Trừ (-) */
+.m {
+    background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
+    border-bottom: 4px solid #450a0a;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+.m:active {
+    border-bottom: 1px solid #450a0a;
+    transform: translateY(3px);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* Nút Cộng (+) */
+.p {
+    background: linear-gradient(180deg, #065f46 0%, #064e3b 100%);
+    border-bottom: 4px solid #022c22;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+.p:active {
+    border-bottom: 1px solid #022c22;
+    transform: translateY(3px);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* DASHBOARD ĐÁY SIÊU ĐẸP */
+.total {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+    background: linear-gradient(to top, #090d16 80%, rgba(9,13,22,0.9) 100%);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 999;
+}
+.total-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Vòng phản chiếu phát sáng LED */
+.glow-circle {
+    background: rgba(30, 41, 59, 0.4);
+    border: 2px solid rgba(56, 189, 248, 0.2);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+    min-width: 160px;
+    padding: 6px 20px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.big {
+    font-size: 38px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+}
+
+/* Nút Reset */
+.total button {
+    margin-top: 6px;
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+}
+.total button:active { color: #f43f5e; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+    <!-- TOP BAR -->
+    <div class="top">
+        <h2><i class="fa-solid fa-pool-8-ball"></i> Bida Score</h2>
+        <button onclick="add()"><i class="fa-solid fa-plus"></i> Người</button>
+    </div>
+    
+    <!-- LIST CARDS -->
+    <div id="list"></div>
+</div>
+
+<!-- FOOTER DASHBOARD -->
+<div class="total">
+    <div class="total-label">Tổng điểm bàn</div>
+    <div class="glow-circle">
+        <div id="tot" class="big">0</div>
+    </div>
+    <button onclick="reset()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+</div>
+
 <script>
 let a=JSON.parse(localStorage.bida2||'[{"name":"Tài","score":0},{"name":"Bạn","score":0}]');
 function save(){localStorage.bida2=JSON.stringify(a)}
-function draw(){list.innerHTML='';let t=0;a.forEach((x,i)=>{t+=x.score;list.innerHTML+=`<div class=card><input class=name value="${x.name}" onchange="a[${i}].name=this.value;save()"><div class=score>${x.score>0?'+':''}${x.score}</div><div class=controls><button class=m onclick="chg(${i},-1)">-1</button><button class=p onclick="chg(${i},1)">+1</button></div><button class=foul-btn onclick="chg(${i},-1)">⚠️ Bắn Đền (-1)</button></div>`});
-tot.innerHTML=t;save();}
-function chg(i,d){a[i].score+=d;draw();}
-function add(){a.push({name:'Người '+(a.length+1),score:0});draw();}
-function reset(){if(confirm("Xóa trận cũ, đấu trận mới chứ?")){a.forEach(x=>x.score=0);draw();}}
+
+function draw(){
+    list.innerHTML='';
+    let t=0;
+    a.forEach((x,i)=>{
+        t+=x.score;
+        list.innerHTML+=`
+        <div class="card">
+            <button class="del-btn" onclick="removePlayer(${i})"><i class="fa-solid fa-xmark"></i></button>
+            <div class="name-wrapper">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <input class="name" value="${x.name}" onchange="a[${i}].name=this.value;save()">
+            </div>
+            <div class="score">${x.score>0?'+':''}${x.score}</div>
+            <div class="controls">
+                <button class="m" onclick="chg(${i},-1)"><i class="fa-solid fa-minus"></i></button>
+                <button class="p" onclick="chg(${i},1)"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>`;
+    });
+    tot.innerHTML=t;
+    save();
+}
+
+function chg(i,d){
+    a[i].score+=d;
+    draw();
+}
+
+// Thêm người chơi mới
+function add(){
+    a.push({name:'Người '+(a.length+1),score:0});
+    draw();
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+// Xóa bớt người chơi
+function removePlayer(i){
+    if(confirm(`Bạn có chắc chắn muốn xóa "${a[i].name}" không?`)){
+        a.splice(i, 1);
+        draw();
+    }
+}
+
+// Reset điểm số
+function reset(){
+    if(confirm("Xóa trận cũ, đấu trận mới chứ?")){
+        a.forEach(x=>x.score=0);
+        draw();
+    }
+}
 draw();
-</script></body></html>
+</script>
+
+</body>
+</html>
