@@ -3,50 +3,58 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SCORE - Times New Roman Pure</title>
+<title>SCORE - Glassmorphism Edition</title>
+
+<!-- Nhúng các font chữ từ Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-/* ĐỊNH NGHĨA BIẾN MÀU THEO CHẾ ĐỘ NỀN */
+/* ĐỊNH NGHĨA BIẾN MÀU THEO CHẾ ĐỘ NỀN (GLASSMORPHISM) */
 body.light-theme {
-    --bg: #f3f4f6;
-    --card-bg: #ffffff;
+    --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #fef3c7 100%);
+    --card-bg: rgba(255, 255, 255, 0.4);
+    --card-border: rgba(255, 255, 255, 0.5);
+    --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
     --text-main: #1e293b;
-    --text-muted: #64748b;
-    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-    --border: rgba(0, 0, 0, 0.05);
-    --btn-theme-bg: #e2e8f0;
-    --score-color: #1e293b;
+    --text-muted: #475569;
+    --btn-theme-bg: rgba(255, 255, 255, 0.5);
     --btn-p-bg: #1e293b;
+    --btn-m-bg: rgba(239, 68, 68, 0.15);
+    --btn-m-text: #dc2626;
 }
 
 body.dark-theme {
-    --bg: #0b0f19;
-    --card-bg: #161b26;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    --card-bg: rgba(22, 27, 38, 0.4);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-    --border: rgba(255, 255, 255, 0.05);
-    --btn-theme-bg: #2d3748;
-    --score-color: #f8fafc;
-    --btn-p-bg: #2d3748;
+    --btn-theme-bg: rgba(255, 255, 255, 0.08);
+    --btn-p-bg: #f8fafc;
+    --btn-m-bg: rgba(239, 68, 68, 0.25);
+    --btn-m-text: #fca5a5;
 }
 
 * { 
     box-sizing: border-box; 
     -webkit-tap-highlight-color: transparent; 
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-    /* Font Times New Roman toàn hệ thống */
-    font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 body {
     margin: 0;
-    background-color: var(--bg);
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     color: var(--text-main);
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Chữ phụ mặc định dùng Inter 400 */
 }
 
 .wrap {
@@ -69,22 +77,25 @@ body {
 }
 .top h1 {
     margin: 0;
-    font-size: 32px;
-    font-weight: bold;
-    font-style: italic;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.top-actions { display: flex; gap: 8px; align-items: center; }
+.top-actions { display: flex; gap: 10px; align-items: center; }
 
 .theme-toggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 30px; /* Bo góc đồng bộ */
+    border: 1px solid var(--card-border);
     background: var(--btn-theme-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: var(--text-main);
     cursor: pointer;
     display: flex;
@@ -93,16 +104,17 @@ body {
 }
 
 .top .btn-add {
-    height: 40px;
-    padding: 0 14px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px; /* Bo góc đồng bộ 30px */
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; /* Nút dùng Outfit 600 */
     font-size: 15px;
-    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -115,7 +127,7 @@ body {
     grid-template-columns: 1fr;
     gap: 14px;
     flex: 1;
-    margin-bottom: 130px;
+    margin-bottom: 140px;
 }
 
 #list.count-1 { grid-template-rows: 1fr; }
@@ -125,20 +137,22 @@ body {
 #list.count-5 { grid-template-rows: repeat(5, 1fr); }
 #list.count-6 { grid-template-rows: repeat(6, 1fr); }
 
-/* THẺ CƠ THỦ */
+/* THẺ CƠ THỦ KÍNH MỜ (GLASSMORPHISM) */
 .card {
     background: var(--card-bg);
-    border-radius: 20px;
-    padding: 10px 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 30px; /* Yêu cầu bo góc 30px */
+    padding: 10px 20px;
     position: relative;
     display: flex;
     align-items: center;
     height: 100%;
     box-shadow: var(--card-shadow);
-    border: 1px solid var(--border);
+    border: 1px solid var(--card-border);
 }
 
-/* TÊN CHIẾM CHÍNH XÁC 45% (GỌN MỘT NỬA BÊN TRÁI) */
+/* TÊN CHIẾM 45% */
 .player-info {
     width: 45%;
     min-width: 0;
@@ -151,8 +165,9 @@ input.name {
     background: none;
     border: none;
     color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; /* Tên dùng Outfit 600 */
     font-size: 22px;
-    font-weight: bold;
     width: 100%;
     padding: 2px 0;
     text-align: left;
@@ -160,22 +175,22 @@ input.name {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
+input.name:focus { outline: none; border-bottom: 2px solid #6366f1; }
 
-/* BỘ ĐIỀU KHIỂN & ĐIỂM CHIẾM 55% RỘNG RÃI */
+/* BỘ ĐIỀU KHIỂN & ĐIỂM CHIẾM 55% */
 .inline-controls {
     width: 55%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 10px;
 }
 
 .inline-controls button {
-    width: 46px;
-    height: 46px;
-    border: none;
-    border-radius: 14px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--card-border);
+    border-radius: 30px; /* Bo góc nút 30px đồng bộ */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -183,35 +198,39 @@ input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
     flex-shrink: 0;
 }
 
-.m { color: #ef4444 !important; background: #fee2e2 !important; }
-body.dark-theme .m { background: rgba(239, 68, 68, 0.2) !important; }
+.m { color: var(--btn-m-text) !important; background: var(--btn-m-bg) !important; }
 .m:active { transform: scale(0.9); }
 
-.p { background-color: var(--btn-p-bg) !important; color: #fff !important; }
+.p { 
+    background-color: var(--btn-p-bg) !important; 
+    color: var(--card-bg) !important; /* Tạo độ tương phản kính mờ đảo ngược */
+}
+body.dark-theme .p { color: #0f172a !important; }
 .p:active { transform: scale(0.9); filter: brightness(0.9); }
 
-/* KHU VỰC CHỮ SỐ ĐIỂM SỐ SIÊU TO RỘNG RÃI */
+/* SỐ ĐIỂM: OUTFIT 800 */
 .score {
     flex: 1;
     text-align: center;
-    font-size: 48px; 
-    font-weight: bold;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; /* Yêu cầu số điểm Outfit 800 */
+    font-size: 52px; 
     line-height: 1;
-    color: var(--score-color);
+    letter-spacing: -1px;
 }
 
 /* ĐIỀU CHỈNH THEO SỐ LƯỢNG HÀNG */
-.count-5 .score, .count-6 .score { font-size: 36px; }
-.count-5 .inline-controls button, .count-6 .inline-controls button { width: 40px; height: 40px; border-radius: 10px; }
+.count-5 .score, .count-6 .score { font-size: 38px; }
+.count-5 .inline-controls button, .count-6 .inline-controls button { width: 42px; height: 42px; }
 .count-5 input.name, .count-6 input.name { font-size: 18px; }
 
-/* THAO TÁC PHỤ */
+/* CHỮ PHỤ / THAO TÁC PHỤ: INTER 400 */
 .card-actions {
     position: absolute;
-    top: 4px;
-    right: 16px;
+    top: 6px;
+    right: 20px;
     z-index: 2;
-    opacity: 0.2;
+    opacity: 0.3;
     transition: opacity 0.2s;
 }
 .card:hover .card-actions, .card:active .card-actions { opacity: 1; }
@@ -220,17 +239,19 @@ body.dark-theme .m { background: rgba(239, 68, 68, 0.2) !important; }
     background: none;
     border: none;
     color: #ef4444;
-    font-size: 13px;
-    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Chữ phụ dùng Inter 400 */
+    font-size: 11px;
+    letter-spacing: 0.5px;
     cursor: pointer;
     padding: 0;
 }
 
 /* ICONS */
-.icon { width: 14px; height: 14px; fill: currentColor; }
+.icon { width: 16px; height: 16px; fill: currentColor; }
 .btn-icon { width: 22px; height: 22px; fill: currentColor; }
 
-/* BOTTOM DASHBOARD */
+/* BOTTOM DASHBOARD KÍNH MỜ */
 .total {
     position: fixed;
     bottom: 0;
@@ -239,57 +260,67 @@ body.dark-theme .m { background: rgba(239, 68, 68, 0.2) !important; }
     width: 100%;
     max-width: 500px;
     background: var(--card-bg);
-    border-top: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--card-border);
     padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     z-index: 999;
-    border-radius: 24px 24px 0 0;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.04);
+    border-radius: 30px 30px 0 0; /* Bo góc trên 30px */
+    box-shadow: var(--card-shadow);
 }
+
+/* CHỮ PHỤ: INTER 400 */
 .total-label {
-    font-size: 13px;
-    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Yêu cầu chữ phụ Inter 400 */
+    font-size: 12px;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .glow-circle {
-    background: var(--bg);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
     min-width: 140px;
-    height: 42px;
-    border-radius: 14px;
+    height: 44px;
+    border-radius: 30px; /* Bo góc khối điểm tổng 30px */
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+/* SỐ ĐIỂM TỔNG: OUTFIT 800 */
 .big { 
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; /* Thống nhất số điểm dùng Outfit 800 */
     font-size: 26px; 
-    font-weight: bold; 
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+/* NÚT PHỤ: OUTFIT 600 */
 .total button {
     background: none;
     border: none;
     color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; /* Nút dùng Outfit 600 */
     font-size: 14px;
-    font-weight: bold;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 12px;
-    margin-top: 4px;
-    border-radius: 8px;
+    padding: 6px 16px;
+    margin-top: 2px;
+    border-radius: 30px;
 }
-.total button:active { color: #ef4444; }
+.total button:active { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 </style>
 </head>
 <body class="light-theme">
@@ -326,12 +357,12 @@ let a = [{"name":"Cơ thủ 1","score":0},{"name":"Cơ thủ 2","score":0}];
 if(localStorage.bida_theme) {
     document.body.className = localStorage.bida_theme;
 }
-if(localStorage.bida_pure) {
-    try { a = JSON.parse(localStorage.bida_pure); } catch(e) {}
+if(localStorage.bida_glass) {
+    try { a = JSON.parse(localStorage.bida_glass); } catch(e) {}
 }
 
 function save(){ 
-    localStorage.bida_pure = JSON.stringify(a); 
+    localStorage.bida_glass = JSON.stringify(a); 
     localStorage.bida_theme = document.body.className;
 }
 
