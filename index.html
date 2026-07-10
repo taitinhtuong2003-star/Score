@@ -342,20 +342,26 @@ function save(){
     localStorage.bida_ios_premium_v5 = JSON.stringify(a); 
 }
 
+function updateName(i, val) {
+    a[i].name = val;
+    save();
+}
+
 function draw(){
     let listNode = document.getElementById('list');
-    listNode.innerHTML = '';
     
     let t = 0;
+    let htmlContent = '';
+    
     a.forEach((x, i) => {
         t += x.score;
         if(!x.history) x.history = [];
         
-        listNode.innerHTML += `
+        htmlContent += `
         <div class="card">
             <div class="card-top-row">
                 <div class="player-info">
-                    <input class="name" value="${x.name}" onchange="a[${i}].name=this.value;save()">
+                    <input class="name" value="${x.name}" oninput="updateName(${i}, this.value)">
                 </div>
                 <div class="history-box">
                     ${x.history.map(h => `<span class="log-tag">${h}</span>`).join('')}
@@ -380,6 +386,8 @@ function draw(){
             </div>
         </div>`;
     });
+    
+    listNode.innerHTML = htmlContent;
     document.getElementById('tot').innerHTML = t;
     save();
 }
