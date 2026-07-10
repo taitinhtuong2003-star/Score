@@ -3,31 +3,58 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SCORE - Vibrant Custom Palette</title>
+<title>SCORE - Glassmorphism Edition</title>
+
+<!-- Nhúng các font chữ từ Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --bg: #f3f4f6;
-    --card-bg: #ffffff;
+/* ĐỊNH NGHĨA BIẾN MÀU THEO CHẾ ĐỘ NỀN (GLASSMORPHISM) */
+body.light-theme {
+    --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #fef3c7 100%);
+    --card-bg: rgba(255, 255, 255, 0.4);
+    --card-border: rgba(255, 255, 255, 0.5);
+    --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
     --text-main: #1e293b;
-    --text-muted: #64748b;
-    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --text-muted: #475569;
+    --btn-theme-bg: rgba(255, 255, 255, 0.5);
+    --btn-p-bg: #1e293b;
+    --btn-m-bg: rgba(239, 68, 68, 0.15);
+    --btn-m-text: #dc2626;
+}
+
+body.dark-theme {
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    --card-bg: rgba(22, 27, 38, 0.4);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --btn-theme-bg: rgba(255, 255, 255, 0.08);
+    --btn-p-bg: #f8fafc;
+    --btn-m-bg: rgba(239, 68, 68, 0.25);
+    --btn-m-text: #fca5a5;
 }
 
 * { 
     box-sizing: border-box; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
     -webkit-tap-highlight-color: transparent; 
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 body {
     margin: 0;
-    background-color: var(--bg);
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     color: var(--text-main);
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Chữ phụ mặc định dùng Inter 400 */
 }
 
 .wrap {
@@ -50,27 +77,44 @@ body {
 }
 .top h1 {
     margin: 0;
-    font-size: 26px;
+    font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    font-size: 30px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
 }
 
-.top-actions { display: flex; gap: 8px; }
-.top button {
-    height: 40px;
-    padding: 0 16px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
+.top-actions { display: flex; gap: 10px; align-items: center; }
+
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 30px; /* Bo góc đồng bộ */
+    border: 1px solid var(--card-border);
+    background: var(--btn-theme-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--text-main);
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
-    transition: transform 0.1s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top .btn-add {
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px; /* Bo góc đồng bộ 30px */
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; /* Nút dùng Outfit 600 */
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -83,7 +127,7 @@ body {
     grid-template-columns: 1fr;
     gap: 14px;
     flex: 1;
-    margin-bottom: 130px;
+    margin-bottom: 140px;
 }
 
 #list.count-1 { grid-template-rows: 1fr; }
@@ -93,17 +137,19 @@ body {
 #list.count-5 { grid-template-rows: repeat(5, 1fr); }
 #list.count-6 { grid-template-rows: repeat(6, 1fr); }
 
-/* THẺ CƠ THỦ 50/50 RỘNG RÃI */
+/* THẺ CƠ THỦ KÍNH MỜ (GLASSMORPHISM) */
 .card {
     background: var(--card-bg);
-    border-radius: 20px;
-    padding: 10px 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 30px; /* Yêu cầu bo góc 30px */
+    padding: 10px 20px;
     position: relative;
     display: flex;
     align-items: center;
     height: 100%;
     box-shadow: var(--card-shadow);
-    border: 1px solid rgba(255,255,255,0.8);
+    border: 1px solid var(--card-border);
 }
 
 /* TÊN CHIẾM 45% */
@@ -119,8 +165,9 @@ input.name {
     background: none;
     border: none;
     color: var(--text-main);
-    font-size: 18px;
-    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; /* Tên dùng Outfit 600 */
+    font-size: 22px;
     width: 100%;
     padding: 2px 0;
     text-align: left;
@@ -128,24 +175,7 @@ input.name {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
-
-/* 5 CHẤM TRÒN CHỌN MÀU NHANH */
-.palette {
-    display: flex;
-    gap: 6px;
-    margin-top: 4px;
-}
-.color-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.05);
-    transition: transform 0.1s;
-}
-.color-dot:active { transform: scale(1.3); }
-.color-dot.active { box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #1e293b; }
+input.name:focus { outline: none; border-bottom: 2px solid #6366f1; }
 
 /* BỘ ĐIỀU KHIỂN & ĐIỂM CHIẾM 55% */
 .inline-controls {
@@ -153,50 +183,54 @@ input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 10px;
 }
 
 .inline-controls button {
-    width: 46px;
-    height: 46px;
-    border: none;
-    border-radius: 14px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--card-border);
+    border-radius: 30px; /* Bo góc nút 30px đồng bộ */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: all 0.1s ease;
 }
 
-.m { color: #ef4444 !important; background: #fee2e2 !important; }
-.m:active { transform: scale(0.9); background: #fca5a5 !important; }
+.m { color: var(--btn-m-text) !important; background: var(--btn-m-bg) !important; }
+.m:active { transform: scale(0.9); }
 
-.p { color: #fff !important; }
+.p { 
+    background-color: var(--btn-p-bg) !important; 
+    color: var(--card-bg) !important; /* Tạo độ tương phản kính mờ đảo ngược */
+}
+body.dark-theme .p { color: #0f172a !important; }
 .p:active { transform: scale(0.9); filter: brightness(0.9); }
 
-/* KHU VỰC ĐIỂM SỐ BIẾN THIÊN THEO MÀU */
+/* SỐ ĐIỂM: OUTFIT 800 */
 .score {
     flex: 1;
     text-align: center;
-    font-size: 40px;
-    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; /* Yêu cầu số điểm Outfit 800 */
+    font-size: 52px; 
     line-height: 1;
-    font-variant-numeric: tabular-nums;
+    letter-spacing: -1px;
 }
 
-/* CO GIÃN ĐIỀU CHỈNH THEO SỐ LƯỢNG HÀNG */
-.count-5 .score, .count-6 .score { font-size: 32px; }
-.count-5 .inline-controls button, .count-6 .inline-controls button { width: 40px; height: 40px; border-radius: 10px; }
-.count-5 input.name, .count-6 input.name { font-size: 15px; }
+/* ĐIỀU CHỈNH THEO SỐ LƯỢNG HÀNG */
+.count-5 .score, .count-6 .score { font-size: 38px; }
+.count-5 .inline-controls button, .count-6 .inline-controls button { width: 42px; height: 42px; }
+.count-5 input.name, .count-6 input.name { font-size: 18px; }
 
-/* THAO TÁC PHỤ */
+/* CHỮ PHỤ / THAO TÁC PHỤ: INTER 400 */
 .card-actions {
     position: absolute;
-    top: 4px;
-    right: 16px;
+    top: 6px;
+    right: 20px;
     z-index: 2;
-    opacity: 0.2;
+    opacity: 0.3;
     transition: opacity 0.2s;
 }
 .card:hover .card-actions, .card:active .card-actions { opacity: 1; }
@@ -205,17 +239,19 @@ input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
     background: none;
     border: none;
     color: #ef4444;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Chữ phụ dùng Inter 400 */
     font-size: 11px;
-    font-weight: 600;
+    letter-spacing: 0.5px;
     cursor: pointer;
     padding: 0;
 }
 
 /* ICONS */
-.icon { width: 13px; height: 13px; fill: currentColor; }
+.icon { width: 16px; height: 16px; fill: currentColor; }
 .btn-icon { width: 22px; height: 22px; fill: currentColor; }
 
-/* BOTTOM DASHBOARD */
+/* BOTTOM DASHBOARD KÍNH MỜ */
 .total {
     position: fixed;
     bottom: 0;
@@ -223,67 +259,80 @@ input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
     transform: translateX(-50%);
     width: 100%;
     max-width: 500px;
-    background: #ffffff;
-    border-top: 1px solid #e2e8f0;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--card-border);
     padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     z-index: 999;
-    border-radius: 24px 24px 0 0;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.04);
+    border-radius: 30px 30px 0 0; /* Bo góc trên 30px */
+    box-shadow: var(--card-shadow);
 }
+
+/* CHỮ PHỤ: INTER 400 */
 .total-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; /* Yêu cầu chữ phụ Inter 400 */
     font-size: 12px;
-    font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .glow-circle {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
     min-width: 140px;
-    height: 42px;
-    border-radius: 14px;
+    height: 44px;
+    border-radius: 30px; /* Bo góc khối điểm tổng 30px */
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+/* SỐ ĐIỂM TỔNG: OUTFIT 800 */
 .big { 
-    font-size: 22px; 
-    font-weight: 800; 
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; /* Thống nhất số điểm dùng Outfit 800 */
+    font-size: 26px; 
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+/* NÚT PHỤ: OUTFIT 600 */
 .total button {
     background: none;
     border: none;
     color: var(--text-muted);
-    font-size: 13px;
-    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; /* Nút dùng Outfit 600 */
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 12px;
-    margin-top: 4px;
-    border-radius: 8px;
+    padding: 6px 16px;
+    margin-top: 2px;
+    border-radius: 30px;
 }
-.total button:active { color: #ef4444; background: #fee2e2; }
+.total button:active { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 </style>
 </head>
-<body>
+<body class="light-theme">
 
 <div class="wrap">
     <div class="top">
         <h1>Scoreboard</h1>
         <div class="top-actions">
-            <button onclick="add()">
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>
+            </button>
+            <button class="btn-add" onclick="add()">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg> Thêm người
             </button>
         </div>
@@ -303,65 +352,62 @@ input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
 </div>
 
 <script>
-// Định nghĩa sẵn bộ 5 màu cao cấp bao gồm màu Đen bóng đêm đầu tiên
-const PALETTE_COLORS = [
-    "#1e293b", // 1. Đen thanh lịch (Slate Dark)
-    "#ff6b6b", // 2. Hồng đào tươi tắn (Mặc định)
-    "#0ea5e9", // 3. Xanh Neon mát mắt
-    "#eab308", // 4. Vàng chanh nổi bật
-    "#a855f7"  // 5. Tím khói thời thượng
-];
+let a = [{"name":"Cơ thủ 1","score":0},{"name":"Cơ thủ 2","score":0}];
 
-const DEFAULT_COLOR = "#ff6b6b"; 
-let DEFAULT_PLAYERS = [{"name":"Cơ thủ 1","score":0,"color":DEFAULT_COLOR},{"name":"Cơ thủ 2","score":0,"color":DEFAULT_COLOR}];
-
-let a = [...DEFAULT_PLAYERS];
-if(localStorage.bida_palette) {
-    try { a = JSON.parse(localStorage.bida_palette); } catch(e) {}
+if(localStorage.bida_theme) {
+    document.body.className = localStorage.bida_theme;
+}
+if(localStorage.bida_glass) {
+    try { a = JSON.parse(localStorage.bida_glass); } catch(e) {}
 }
 
-function save(){ localStorage.bida_palette = JSON.stringify(a); }
+function save(){ 
+    localStorage.bida_glass = JSON.stringify(a); 
+    localStorage.bida_theme = document.body.className;
+}
+
+function toggleTheme() {
+    const body = document.body;
+    if(body.classList.contains('light-theme')) {
+        body.className = 'dark-theme';
+    } else {
+        body.className = 'light-theme';
+    }
+    draw();
+}
 
 function draw(){
     let listNode = document.getElementById('list');
     listNode.innerHTML = '';
     listNode.className = 'count-' + Math.min(a.length, 6);
     
+    const isDark = document.body.classList.contains('dark-theme');
+    document.getElementById('themeBtn').innerHTML = isDark ? 
+        `<svg class="icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1z"/></svg>` : 
+        `<svg class="icon" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>`;
+
     let t = 0;
     a.forEach((x, i) => {
         t += x.score;
-        if(!x.color) x.color = DEFAULT_COLOR;
-        
-        // Tạo chuỗi HTML cho 5 chấm màu tròn chọn nhanh
-        let dotsHtml = '';
-        PALETTE_COLORS.forEach(c => {
-            let isActive = (x.color === c) ? 'active' : '';
-            dotsHtml += `<div class="color-dot ${isActive}" style="background-color: ${c};" onclick="changeColor(${i}, '${c}')"></div>`;
-        });
         
         listNode.innerHTML += `
         <div class="card">
             <div class="card-actions">
-                <button class="del-btn" onclick="removePlayer(${i})">Xóa</button>
+                <button class="del-btn" onclick="removePlayer(${i})">XÓA</button>
             </div>
             
-            <!-- BÊN TRÁI: TÊN & BỘ CHỌN 5 MÀU -->
             <div class="player-info">
                 <input class="name" value="${x.name}" onchange="a[${i}].name=this.value;save()">
-                <div class="palette">
-                    ${dotsHtml}
-                </div>
             </div>
             
-            <!-- BÊN PHẢI: ĐIỀU KHIỂN ĐIỂM SỐ ĐỒNG BỘ THEO MÀU -->
             <div class="inline-controls">
                 <button class="m" onclick="chg(${i},-1)">
                     <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
                 </button>
-                <div class="score" style="color: ${x.color};">
+                <div class="score">
                     ${x.score > 0 ? '+' : ''}${x.score}
                 </div>
-                <button class="p" style="background-color: ${x.color};" onclick="chg(${i},1)">
+                <button class="p" onclick="chg(${i},1)">
                     <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg>
                 </button>
             </div>
@@ -376,17 +422,12 @@ function chg(i, d){
     draw();
 }
 
-function changeColor(i, newColor){
-    a[i].color = newColor;
-    draw();
-}
-
 function add(){
     if (a.length >= 6) {
         alert("Ứng dụng hỗ trợ tối đa 6 hàng để đảm bảo trải nghiệm hiển thị tốt nhất!");
         return;
     }
-    a.push({name: 'Cơ thủ ' + (a.length + 1), score: 0, color: DEFAULT_COLOR});
+    a.push({name: 'Cơ thủ ' + (a.length + 1), score: 0});
     draw();
 }
 
