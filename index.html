@@ -3,22 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SCORE - Modern Minimalist Board</title>
+<title>SCORE - Vibrant Custom Palette</title>
 
 <style>
 :root {
-    --bg: #0b0f17;
-    --card-bg: #161b26;
-    --text-main: #ffffff;
+    --bg: #f3f4f6;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
     --text-muted: #64748b;
-    --accent: #3b82f6; /* Xanh Công Nghệ Hiện Đại */
-    --border: rgba(255, 255, 255, 0.05);
-    --shadow: rgba(0, 0, 0, 0.3);
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
 }
 
 * { 
     box-sizing: border-box; 
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
     -webkit-tap-highlight-color: transparent; 
 }
 
@@ -52,36 +50,40 @@ body {
 }
 .top h1 {
     margin: 0;
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
 }
 
 .top-actions { display: flex; gap: 8px; }
 .top button {
-    height: 38px;
-    padding: 0 14px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--card-bg);
-    color: var(--text-main);
-    font-size: 13px;
-    font-weight: 600;
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+    transition: transform 0.1s, opacity 0.2s;
     display: flex;
     align-items: center;
     gap: 6px;
 }
-.top button:active { transform: scale(0.96); background: rgba(255,255,255,0.05); }
+.top button:active { transform: scale(0.95); opacity: 0.9; }
 
 /* LƯỚI CHIA NGANG ĐỀU NHAU FULL MÀN HÌNH */
 #list {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
     flex: 1;
-    margin-bottom: 120px;
+    margin-bottom: 130px;
 }
 
 #list.count-1 { grid-template-rows: 1fr; }
@@ -91,27 +93,26 @@ body {
 #list.count-5 { grid-template-rows: repeat(5, 1fr); }
 #list.count-6 { grid-template-rows: repeat(6, 1fr); }
 
-/* THÈ CƠ THỦ - SANG TRỌNG & TỐI GIẢN */
+/* THẺ CƠ THỦ 50/50 RỘNG RÃI */
 .card {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 8px 20px;
+    border-radius: 20px;
+    padding: 10px 16px;
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    overflow: hidden;
     height: 100%;
-    box-shadow: 0 4px 20px var(--shadow);
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255,255,255,0.8);
 }
 
+/* TÊN CHIẾM 45% */
 .player-info {
-    flex: 1;
-    display: flex;
-    align-items: center;
+    width: 45%;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 input.name {
@@ -119,114 +120,102 @@ input.name {
     border: none;
     color: var(--text-main);
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
     width: 100%;
-    padding: 4px 0;
+    padding: 2px 0;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-input.name:focus { outline: none; border-bottom: 1.5px solid var(--accent); }
+input.name:focus { outline: none; border-bottom: 2px solid #ff6b6b; }
 
-/* BỘ ĐIỀU KHIỂN HÀNG NGANG TỐI GIẢN */
+/* 5 CHẤM TRÒN CHỌN MÀU NHANH */
+.palette {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+.color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.1s;
+}
+.color-dot:active { transform: scale(1.3); }
+.color-dot.active { box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #1e293b; }
+
+/* BỘ ĐIỀU KHIỂN & ĐIỂM CHIẾM 55% */
 .inline-controls {
+    width: 55%;
     display: flex;
     align-items: center;
-    gap: 16px;
-    flex-shrink: 0;
+    justify-content: space-between;
+    gap: 8px;
 }
 
 .inline-controls button {
-    width: 44px;
-    height: 44px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text-main);
-    background: rgba(255, 255, 255, 0.03);
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     transition: all 0.1s ease;
 }
-.inline-controls button:active { transform: scale(0.92); background: rgba(255, 255, 255, 0.08); }
 
-/* Độc quyền màu sắc điểm nhấn nhẹ cho nút cộng/trừ */
-.m { color: #f43f5e !important; } /* Hồng đỏ hiện đại */
-.p { color: #10b981 !important; } /* Xanh lục bảo hiện đại */
+.m { color: #ef4444 !important; background: #fee2e2 !important; }
+.m:active { transform: scale(0.9); background: #fca5a5 !important; }
 
-/* ĐIỂM SỐ NỔI BẬT */
+.p { color: #fff !important; }
+.p:active { transform: scale(0.9); filter: brightness(0.9); }
+
+/* KHU VỰC ĐIỂM SỐ BIẾN THIÊN THEO MÀU */
 .score {
-    min-width: 55px;
+    flex: 1;
     text-align: center;
-    font-size: 36px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums; /* Giữ số không bị lệch dịch chuyển khi nhảy số */
+    font-size: 40px;
+    font-weight: 800;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
 }
 
-/* CO GIÃN THEO ĐỘ ĐÔNG NGƯỜI */
-.count-5 .score, .count-6 .score { font-size: 28px; }
-.count-5 .inline-controls button, .count-6 .inline-controls button { width: 38px; height: 38px; border-radius: 10px; }
+/* CO GIÃN ĐIỀU CHỈNH THEO SỐ LƯỢNG HÀNG */
+.count-5 .score, .count-6 .score { font-size: 32px; }
+.count-5 .inline-controls button, .count-6 .inline-controls button { width: 40px; height: 40px; border-radius: 10px; }
 .count-5 input.name, .count-6 input.name { font-size: 15px; }
 
 /* THAO TÁC PHỤ */
 .card-actions {
     position: absolute;
     top: 4px;
-    left: 20px;
-    display: flex;
-    gap: 12px;
+    right: 16px;
     z-index: 2;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    opacity: 0.2;
+    transition: opacity 0.2s;
 }
-.card:hover .card-actions, .card:active .card-actions { opacity: 0.4; }
-.card-actions:hover { opacity: 1 !important; }
-
-.color-picker-wrapper {
-    position: relative;
-    font-size: 11px;
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.color-picker-wrapper input[type="color"] {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0; cursor: pointer;
-}
+.card:hover .card-actions, .card:active .card-actions { opacity: 1; }
 
 .del-btn {
     background: none;
     border: none;
-    color: #f43f5e;
+    color: #ef4444;
     font-size: 11px;
+    font-weight: 600;
     cursor: pointer;
     padding: 0;
-    display: flex;
-    align-items: center;
-    gap: 4px;
 }
 
-/* SVG ICONS */
-.icon {
-    width: 14px;
-    height: 14px;
-    fill: currentColor;
-    display: inline-block;
-    vertical-align: middle;
-}
-.btn-icon {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-}
+/* ICONS */
+.icon { width: 13px; height: 13px; fill: currentColor; }
+.btn-icon { width: 22px; height: 22px; fill: currentColor; }
 
-/* DASHBOARD TỔNG ĐIỂM ĐÁY */
+/* BOTTOM DASHBOARD */
 .total {
     position: fixed;
     bottom: 0;
@@ -234,55 +223,63 @@ input.name:focus { outline: none; border-bottom: 1.5px solid var(--accent); }
     transform: translateX(-50%);
     width: 100%;
     max-width: 500px;
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 16px 16px calc(14px + env(safe-area-inset-bottom));
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     z-index: 999;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.04);
 }
 .total-label {
-    font-size: 11px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .glow-circle {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     min-width: 140px;
-    height: 40px;
-    border-radius: 12px;
+    height: 42px;
+    border-radius: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.big { font-size: 20px; font-weight: 700; color: var(--text-main); }
+.big { 
+    font-size: 22px; 
+    font-weight: 800; 
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
 .total button {
     background: none;
     border: none;
     color: var(--text-muted);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 8px;
-    transition: color 0.2s;
+    padding: 6px 12px;
+    margin-top: 4px;
+    border-radius: 8px;
 }
-.total button:active { color: #f43f5e; }
+.total button:active { color: #ef4444; background: #fee2e2; }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-    <!-- TOP APP BAR -->
     <div class="top">
         <h1>Scoreboard</h1>
         <div class="top-actions">
@@ -292,63 +289,71 @@ input.name:focus { outline: none; border-bottom: 1.5px solid var(--accent); }
         </div>
     </div>
     
-    <!-- CONTAINER THẺ NGƯỜI CHƠI CHIA HÀNG NGANG ĐỀU NHAU -->
     <div id="list"></div>
 </div>
 
-<!-- DASHBOARD TỔNG ĐIỂM -->
 <div class="total">
     <div class="total-label">Tổng số điểm toàn bàn</div>
     <div class="glow-circle">
         <div id="tot" class="big">0</div>
     </div>
     <button onclick="reset()">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg> Reset trận
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg> Làm mới trận
     </button>
 </div>
 
 <script>
-// Đồng bộ đồng nhất màu chữ mặc định cho tất cả cơ thủ là màu trắng tinh tế
-const DEFAULT_TEXT_COLOR = "#ffffff"; 
-const DEFAULT_PLAYERS = [{"name":"Cơ thủ 1","score":0,"color":DEFAULT_TEXT_COLOR},{"name":"Cơ thủ 2","score":0,"color":DEFAULT_TEXT_COLOR}];
+// Định nghĩa sẵn bộ 5 màu cao cấp bao gồm màu Đen bóng đêm đầu tiên
+const PALETTE_COLORS = [
+    "#1e293b", // 1. Đen thanh lịch (Slate Dark)
+    "#ff6b6b", // 2. Hồng đào tươi tắn (Mặc định)
+    "#0ea5e9", // 3. Xanh Neon mát mắt
+    "#eab308", // 4. Vàng chanh nổi bật
+    "#a855f7"  // 5. Tím khói thời thượng
+];
+
+const DEFAULT_COLOR = "#ff6b6b"; 
+let DEFAULT_PLAYERS = [{"name":"Cơ thủ 1","score":0,"color":DEFAULT_COLOR},{"name":"Cơ thủ 2","score":0,"color":DEFAULT_COLOR}];
 
 let a = [...DEFAULT_PLAYERS];
-if(localStorage.bida_modern) {
-    try { a = JSON.parse(localStorage.bida_modern); } catch(e) {}
+if(localStorage.bida_palette) {
+    try { a = JSON.parse(localStorage.bida_palette); } catch(e) {}
 }
 
-function save(){ localStorage.bida_modern = JSON.stringify(a); }
+function save(){ localStorage.bida_palette = JSON.stringify(a); }
 
 function draw(){
     let listNode = document.getElementById('list');
     listNode.innerHTML = '';
-    
     listNode.className = 'count-' + Math.min(a.length, 6);
     
     let t = 0;
     a.forEach((x, i) => {
         t += x.score;
-        if(!x.color) x.color = DEFAULT_TEXT_COLOR;
+        if(!x.color) x.color = DEFAULT_COLOR;
+        
+        // Tạo chuỗi HTML cho 5 chấm màu tròn chọn nhanh
+        let dotsHtml = '';
+        PALETTE_COLORS.forEach(c => {
+            let isActive = (x.color === c) ? 'active' : '';
+            dotsHtml += `<div class="color-dot ${isActive}" style="background-color: ${c};" onclick="changeColor(${i}, '${c}')"></div>`;
+        });
         
         listNode.innerHTML += `
         <div class="card">
-            <!-- THAO TÁC PHỤ (Ẩn khéo léo, di chuột hoặc chạm nhẹ vào thẻ sẽ hiện) -->
             <div class="card-actions">
-                <div class="color-picker-wrapper">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg> Đổi màu chữ
-                    <input type="color" value="${x.color}" onchange="changeColor(${i}, this.value)">
-                </div>
-                <button class="del-btn" onclick="removePlayer(${i})">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg> Xóa
-                </button>
+                <button class="del-btn" onclick="removePlayer(${i})">Xóa</button>
             </div>
             
-            <!-- BÊN TRÁI: TÊN CƠ THỦ -->
+            <!-- BÊN TRÁI: TÊN & BỘ CHỌN 5 MÀU -->
             <div class="player-info">
                 <input class="name" value="${x.name}" onchange="a[${i}].name=this.value;save()">
+                <div class="palette">
+                    ${dotsHtml}
+                </div>
             </div>
             
-            <!-- BÊN PHẢI: BỘ ĐIỀU KHIỂN ĐIỂM SỐ CHUNG HÀNG -->
+            <!-- BÊN PHẢI: ĐIỀU KHIỂN ĐIỂM SỐ ĐỒNG BỘ THEO MÀU -->
             <div class="inline-controls">
                 <button class="m" onclick="chg(${i},-1)">
                     <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
@@ -356,7 +361,7 @@ function draw(){
                 <div class="score" style="color: ${x.color};">
                     ${x.score > 0 ? '+' : ''}${x.score}
                 </div>
-                <button class="p" onclick="chg(${i},1)">
+                <button class="p" style="background-color: ${x.color};" onclick="chg(${i},1)">
                     <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg>
                 </button>
             </div>
@@ -378,10 +383,10 @@ function changeColor(i, newColor){
 
 function add(){
     if (a.length >= 6) {
-        alert("Ứng dụng hỗ trợ tối đa 6 hàng để đảm bảo trải nghiệm hiển thị đẹp nhất!");
+        alert("Ứng dụng hỗ trợ tối đa 6 hàng để đảm bảo trải nghiệm hiển thị tốt nhất!");
         return;
     }
-    a.push({name: 'Cơ thủ ' + (a.length + 1), score: 0, color: DEFAULT_TEXT_COLOR});
+    a.push({name: 'Cơ thủ ' + (a.length + 1), score: 0, color: DEFAULT_COLOR});
     draw();
 }
 
@@ -393,7 +398,7 @@ function removePlayer(i){
 }
 
 function reset(){
-    if(confirm("Làm mới toàn bộ điểm số?")){
+    if(confirm("Làm mới lại toàn bộ điểm số?")){
         a.forEach(x => x.score = 0);
         draw();
     }
