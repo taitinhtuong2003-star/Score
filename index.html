@@ -6,19 +6,17 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SCORE">
-<title>SCORE - Premium Scoreboard</title>
+<title>SCORE - Billiards Scoreboard</title>
 
-<!-- Cấu hình chuẩn kết nối Manifest và các Icon độc lập -->
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-512.png">
-<!-- Khai báo lại file ảnh PNG rời cho iPhone -->
-<link rel="apple-touch-icon" href="icon-512.png">
+<!-- Đã thêm mã phá cache (?v=2) để ép iPhone nhận diện đúng Icon mới -->
+<link rel="manifest" href="manifest.json?v=2">
+<link rel="apple-touch-icon" href="icon-512.png?v=2">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght=400;500;600;800&display=swap" rel="stylesheet">
 
 <style>
-/* BIẾN MÀU THEO PHONG CÁCH TỐI GIẢN CHÂN THỰC */
 body.light-theme {
     --bg-gradient: linear-gradient(145deg, #f1f5f9 0%, #f8fafc 100%);
     --card-bg: rgba(255, 255, 255, 0.55);
@@ -74,7 +72,6 @@ body {
     height: 100vh;
 }
 
-/* TOP BAR */
 .top {
     display: flex;
     justify-content: space-between;
@@ -128,7 +125,6 @@ body.light-theme .btn-add { background: #0f172a; color: #ffffff; }
 body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
 .btn-add:active, .theme-toggle:active { transform: scale(0.94); }
 
-/* LIST NGƯỜI CHƠI */
 #list {
     display: flex;
     flex-direction: column;
@@ -140,7 +136,6 @@ body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
 }
 #list::-webkit-scrollbar { display: none; }
 
-/* CONTAINER VUỐT XÓA */
 .swipe-container {
     position: relative;
     width: 100%;
@@ -161,7 +156,6 @@ body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* PHẦN NỀN XÓA ẨN PHÍA SAU */
 .swipe-backend {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
@@ -183,7 +177,6 @@ body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
     gap: 4px;
 }
 
-/* CARD THÔNG TIN CHÍNH */
 .card {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -199,11 +192,8 @@ body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
     transform: translateX(0px);
     transition: transform 0.4s cubic-bezier(0.25, 1.15, 0.35, 1.15), background 0.3s, border-color 0.3s;
 }
-.card.swiping {
-    transition: none; 
-}
+.card.swiping { transition: none; }
 
-/* LAYOUT CHI TIẾT TRONG CARD */
 .player-info { width: 42%; min-width: 0; }
 
 input.name {
@@ -245,7 +235,6 @@ input.name:focus { outline: none; }
 }
 .inline-controls button:active { transform: scale(0.85); }
 
-/* ĐIỂM SỐ */
 .score {
     flex: 1;
     text-align: center;
@@ -269,7 +258,6 @@ input.name:focus { outline: none; }
     100% { transform: scale(1); }
 }
 
-/* TOTAL DASHBOARD */
 .total {
     width: 100%;
     background: var(--card-bg);
@@ -335,7 +323,6 @@ input.name:focus { outline: none; }
     100% { opacity: 1; transform: scale(1); }
 }
 
-/* OVERLAY DIALOG */
 .overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -517,13 +504,11 @@ function changeScore(index, value) {
     const scoreNode = document.getElementById(`score-${index}`);
     if (scoreNode) {
         scoreNode.innerText = (players[index].score > 0 ? '+' : '') + players[index].score;
-        
         const animClass = value > 0 ? 'score-up' : 'score-down';
         scoreNode.classList.remove('score-up', 'score-down');
         void scoreNode.offsetWidth; 
         scoreNode.classList.add(animClass);
     }
-
     updateTotalScore(true);
 }
 
@@ -535,13 +520,9 @@ function setupHoldEvents(index, direction) {
         e.preventDefault();
         e.stopPropagation();
         closeActiveSwipe();
-        
         changeScore(index, direction);
-
         repeatTimeout = setTimeout(() => {
-            repeatInterval = setInterval(() => {
-                changeScore(index, direction);
-            }, 80); 
+            repeatInterval = setInterval(() => { changeScore(index, direction); }, 80);
         }, 400);
     };
 
@@ -563,7 +544,6 @@ function updateTotalScore(animate) {
     const totalNode = document.getElementById('tot');
     if (!totalNode) return;
     totalNode.innerText = total;
-
     if (animate) {
         totalNode.classList.remove('big-pop');
         void totalNode.offsetWidth;
@@ -576,7 +556,6 @@ function addPlayer() {
     players.push({ name: 'Cơ thủ ' + (players.length + 1), score: 0 });
     render(true);
     save();
-    
     setTimeout(() => {
         const listNode = document.getElementById('list');
         if (listNode) listNode.scrollTo({ top: listNode.scrollHeight, behavior: 'smooth' });
@@ -591,7 +570,6 @@ function setupSwipeEvents(index) {
     card.addEventListener('touchstart', (e) => {
         if(e.target.tagName === 'INPUT' || e.target.closest('button')) return;
         if (activeSwipedIdx !== null && activeSwipedIdx !== index) closeActiveSwipe();
-
         startX = e.touches[0].clientX;
         initialTranslateX = activeSwipedIdx === index ? -maxSwipeDist : 0;
         card.classList.add('swiping');
@@ -602,11 +580,8 @@ function setupSwipeEvents(index) {
         if (!isSwiping) return;
         currentX = e.touches[0].clientX;
         let diffX = currentX - startX + initialTranslateX;
-
         if (diffX > 0) diffX = 0;
-        if (diffX < -maxSwipeDist) {
-            diffX = -maxSwipeDist + (diffX + maxSwipeDist) * 0.25; 
-        }
+        if (diffX < -maxSwipeDist) diffX = -maxSwipeDist + (diffX + maxSwipeDist) * 0.25; 
         card.style.transform = `translateX(${diffX}px)`;
     }, { passive: true });
 
@@ -614,7 +589,6 @@ function setupSwipeEvents(index) {
         if (!isSwiping) return;
         card.classList.remove('swiping');
         isSwiping = false;
-
         let finalX = currentX - startX + initialTranslateX;
         if (finalX < -40) {
             card.style.transform = `translateX(-${maxSwipeDist}px)`;
@@ -642,7 +616,6 @@ document.addEventListener('touchstart', (e) => {
 }, { passive: true });
 
 let pendingDeleteIndex = null;
-
 function triggerDelete(index) {
     pendingDeleteIndex = index;
     const overlay = document.getElementById('confirmOverlay');
@@ -656,16 +629,11 @@ function triggerDelete(index) {
             container.style.transition = "all 0.35s cubic-bezier(0.4, 0, 1, 1)";
             container.style.opacity = "0";
             container.style.transform = "scale(0.8) translateY(-20px)";
-            container.style.height = "0px";
-            container.style.minHeight = "0px";
-            container.style.marginBottom = "-14px";
+            container.style.height = "0px"; container.style.minHeight = "0px"; container.style.marginBottom = "-14px";
         }
-        
         setTimeout(() => {
             players.splice(pendingDeleteIndex, 1);
-            save();
-            render();
-            closeConfirmDialog(null, true);
+            save(); render(); closeConfirmDialog(null, true);
         }, 320);
     };
 }
@@ -684,10 +652,8 @@ function resetScores() {
         const listNode = document.getElementById('list');
         if (!listNode) return;
         listNode.classList.add('reset-flash');
-        
         players.forEach(p => p.score = 0);
         save();
-        
         setTimeout(() => {
             render();
             listNode.classList.remove('reset-flash');
@@ -695,33 +661,21 @@ function resetScores() {
     }
 }
 
-/* CHẶN ZOOM CỬ CHỈ */
-document.addEventListener('gesturestart', function(e) {
-    e.preventDefault();
-}, false);
-
+document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, false);
 let lastTouchEnd = 0;
 document.addEventListener('touchend', (e) => {
     const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 250) {
-        if (e.target.tagName !== 'INPUT') {
-            e.preventDefault();
-        }
-    }
+    if (now - lastTouchEnd <= 250) { if (e.target.tagName !== 'INPUT') e.preventDefault(); }
     lastTouchEnd = now;
 }, false);
 
 render();
 
-/* KÍCH HOẠT SERVICE WORKER */
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').then(() => {
+    navigator.serviceWorker.register('sw.js?v=2').then(() => {
         console.log('Service Worker Registered');
-    }).catch((err) => {
-        console.log('Service Worker Failed', err);
-    });
+    }).catch((err) => { console.log('Service Worker Failed', err); });
 }
 </script>
-
 </body>
 </html>
