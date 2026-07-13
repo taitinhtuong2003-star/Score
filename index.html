@@ -2,12 +2,19 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<!-- Tối ưu hiển thị fullscreen cho iOS -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SCORE">
 <title>SCORE - Premium Scoreboard</title>
+
+<!-- Tự động nhúng Manifest làm PWA để ẩn thanh tìm kiếm Safari khi Add to Home Screen -->
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Premium%20Scoreboard%22,%22short_name%22:%22SCORE%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230f172a%22,%22theme_color%22:%22%230f172a%22}">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght=400;500;600;800&display=swap" rel="stylesheet">
 
 <style>
 /* BIẾN MÀU THEO PHONG CÁCH TỐI GIẢN CHÂN THỰC */
@@ -60,13 +67,14 @@ body {
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    padding: calc(28px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));
+    /* env(safe-area-inset-top) giúp đẩy giao diện xuống dưới Tai thỏ / Dynamic Island khi ẩn thanh tìm kiếm */
+    padding: calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
 
-/* TOP BAR - THOÁNG HƠN */
+/* TOP BAR */
 .top {
     display: flex;
     justify-content: space-between;
@@ -124,7 +132,7 @@ body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
 #list {
     display: flex;
     flex-direction: column;
-    gap: 14px; /* Tăng khoảng cách trống giữa các card */
+    gap: 14px; 
     flex: 1;
     margin-bottom: 24px;
     overflow-y: auto;
@@ -139,13 +147,12 @@ body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
     border-radius: 20px;
     overflow: hidden;
     flex: 1;
-    min-height: 84px; /* Tạo không gian card thoáng đãng hơn */
+    min-height: 84px; 
     box-shadow: var(--card-shadow);
     touch-action: pan-y;
     will-change: transform, opacity;
 }
 
-/* SPRING ANIMATION KHI THÊM CARD */
 .card-spawn {
     animation: springIn 0.5s cubic-bezier(0.25, 1.25, 0.4, 1) forwards;
 }
@@ -190,21 +197,21 @@ body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
     align-items: center;
     z-index: 2;
     transform: translateX(0px);
-    /* Tạo cảm giác nẩy (Spring) khi trả thẻ về vị trí cũ */
     transition: transform 0.4s cubic-bezier(0.25, 1.15, 0.35, 1.15), background 0.3s, border-color 0.3s;
 }
 .card.swiping {
-    transition: none; /* Tắt mượt khi đang di chuyển ngón tay */
+    transition: none; 
 }
 
 /* LAYOUT CHI TIẾT TRONG CARD */
 .player-info { width: 42%; min-width: 0; }
+
 input.name {
     background: none;
     border: none;
     color: var(--text-main);
     font-weight: 600;
-    font-size: clamp(17px, 2.8vh, 20px);
+    font-size: 16px; /* Giữ 16px tiêu chuẩn hệ thống iOS */
     width: 100%;
     padding: 4px 0;
     white-space: nowrap;
@@ -238,7 +245,7 @@ input.name:focus { outline: none; }
 }
 .inline-controls button:active { transform: scale(0.85); }
 
-/* ĐIỂM SỐ SẮC NÉT & ANIMATION SPRING POP */
+/* ĐIỂM SỐ */
 .score {
     flex: 1;
     text-align: center;
@@ -262,7 +269,7 @@ input.name:focus { outline: none; }
     100% { transform: scale(1); }
 }
 
-/* TOTAL DASHBOARD (ĐÁY MÀN HÌNH) */
+/* TOTAL DASHBOARD */
 .total {
     width: 100%;
     background: var(--card-bg);
@@ -322,7 +329,6 @@ input.name:focus { outline: none; }
 }
 .total button:active { color: #ef4444; background: rgba(239, 68, 68, 0.06); }
 
-/* ANIMATION KHI RESET TOÀN BỘ TRẬN ĐẤU */
 .reset-flash { animation: flashEffect 0.4s ease-out forwards; }
 @keyframes flashEffect {
     0% { opacity: 0.3; transform: scale(0.98); }
@@ -421,7 +427,6 @@ let players = [{ name: "Cơ thủ 1", score: 0 }, { name: "Cơ thủ 2", score: 
 let activeSwipedIdx = null;
 const maxSwipeDist = 84;
 
-// BIẾN QUẢN LÝ NHẤN GIỮ (AUTO-REPEAT) CHỐNG LAG VÀ TRÀN BỘ NHỚ
 let repeatInterval = null;
 let repeatTimeout = null;
 
@@ -455,7 +460,6 @@ function render(isNewCardAdded = false) {
 
     players.forEach((player, index) => {
         const container = document.createElement('div');
-        // Áp dụng animation nẩy khi thêm người chơi mới vào cuối danh sách
         container.className = `swipe-container ${isNewCardAdded && index === players.length - 1 ? 'card-spawn' : ''}`;
         container.id = `container-${index}`;
 
@@ -486,8 +490,8 @@ function render(isNewCardAdded = false) {
 
         listNode.appendChild(container);
         setupSwipeEvents(index);
-        setupHoldEvents(index, 1);  // Cài đặt nút Cộng
-        setupHoldEvents(index, -1); // Cài đặt nút Trừ
+        setupHoldEvents(index, 1);  
+        setupHoldEvents(index, -1); 
     });
 
     updateTotalScore(false);
@@ -499,7 +503,6 @@ function updateName(index, val) {
     save();
 }
 
-// XỬ LÝ RUNG HAPTIC & TÍNH ĐIỂM & CHẠY ANIMATION XUẤT SẮC KHÔNG LAG
 function changeScore(index, value) {
     if (window.navigator && window.navigator.vibrate) {
         window.navigator.vibrate(10);
@@ -512,7 +515,6 @@ function changeScore(index, value) {
     if (scoreNode) {
         scoreNode.innerText = (players[index].score > 0 ? '+' : '') + players[index].score;
         
-        // Tạo Spring Pop linh hoạt theo hướng tăng/giảm điểm
         const animClass = value > 0 ? 'score-up' : 'score-down';
         scoreNode.classList.remove('score-up', 'score-down');
         void scoreNode.offsetWidth; 
@@ -522,7 +524,6 @@ function changeScore(index, value) {
     updateTotalScore(true);
 }
 
-// THIẾT LẬP NHẤN GIỮ ĐIỂM (HOLD TO AUTO-REPEAT) TỐI ƯU UX TỐT NHẤT
 function setupHoldEvents(index, direction) {
     const btn = document.getElementById(direction > 0 ? `btn-p-${index}` : `btn-m-${index}`);
     if (!btn) return;
@@ -532,14 +533,12 @@ function setupHoldEvents(index, direction) {
         e.stopPropagation();
         closeActiveSwipe();
         
-        // Phát một lần bấm đầu tiên ngay lập tức
         changeScore(index, direction);
 
-        // Đợi 400ms nhấn giữ liên tục để kích hoạt lặp lại nhanh (tốc độ cao)
         repeatTimeout = setTimeout(() => {
             repeatInterval = setInterval(() => {
                 changeScore(index, direction);
-            }, 80); // Cứ mỗi 80ms tăng/giảm 1 điểm liên tục
+            }, 80); 
         }, 400);
     };
 
@@ -548,7 +547,6 @@ function setupHoldEvents(index, direction) {
         clearInterval(repeatInterval);
     };
 
-    // Tích hợp hoàn hảo cho cả Mobile Touch và Chuột máy tính
     btn.addEventListener('touchstart', startAction, { passive: false });
     btn.addEventListener('touchend', stopAction, { passive: true });
     btn.addEventListener('touchcancel', stopAction, { passive: true });
@@ -581,7 +579,6 @@ function addPlayer() {
     }, 60);
 }
 
-// CÀI ĐẶT VUỐT CARD TRƠN TRU KHÔNG KHỰNG KHỚP
 function setupSwipeEvents(index) {
     const card = document.getElementById(`card-${index}`);
     let startX = 0, currentX = 0, isSwiping = false, initialTranslateX = 0;
@@ -603,7 +600,7 @@ function setupSwipeEvents(index) {
 
         if (diffX > 0) diffX = 0;
         if (diffX < -maxSwipeDist) {
-            diffX = -maxSwipeDist + (diffX + maxSwipeDist) * 0.25; // Cản lực đàn hồi nhẹ
+            diffX = -maxSwipeDist + (diffX + maxSwipeDist) * 0.25; 
         }
         card.style.transform = `translateX(${diffX}px)`;
     }, { passive: true });
@@ -639,7 +636,6 @@ document.addEventListener('touchstart', (e) => {
     }
 }, { passive: true });
 
-// XỬ LÝ QUY TRÌNH XÓA CARD SỬ DỤNG SPRING ANIMATION BIẾN MẤT
 let pendingDeleteIndex = null;
 
 function triggerDelete(index) {
@@ -675,7 +671,6 @@ function closeConfirmDialog(event, isDeleted) {
     pendingDeleteIndex = null;
 }
 
-// RESET TRẬN ĐẤU CÓ HIỆU ỨNG FLASH CHUYỂN ĐỘNG ĐẸP MẮT
 function resetScores() {
     closeActiveSwipe();
     if(confirm("Làm mới lại toàn bộ điểm số trận đấu?")) {
@@ -692,11 +687,19 @@ function resetScores() {
     }
 }
 
-// BẬT CHẾ ĐỘ CHẶN DOUBLE-TAP ZOOM CỦA TRÌNH DUYỆT IOS SAFARI NHƯNG KHÔNG GÂY TREO EVENT LƯỚT CHẠM
+/* CHẶN ZOOM TOÀN DIỆN CHO TRÌNH DUYỆT */
+document.addEventListener('gesturestart', function(e) {
+    e.preventDefault();
+}, false);
+
 let lastTouchEnd = 0;
 document.addEventListener('touchend', (e) => {
     const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 250) e.preventDefault();
+    if (now - lastTouchEnd <= 250) {
+        if (e.target.tagName !== 'INPUT') {
+            e.preventDefault();
+        }
+    }
     lastTouchEnd = now;
 }, false);
 
