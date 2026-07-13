@@ -1,15 +1,14 @@
 {
-  "name": "SCORE - Premium Scoreboard",
+  "name": "Điểm Bi a",
   "short_name": "SCORE",
-  "description": "Ứng dụng đếm điểm số chuyên nghiệp cho cơ thủ bida.",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#090d16",
   "theme_color": "#090d16",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "icon-512.png?v=2",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
