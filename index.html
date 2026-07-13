@@ -8,11 +8,10 @@
 <meta name="apple-mobile-web-app-title" content="SCORE">
 <title>SCORE - Premium Scoreboard</title>
 
-<!-- Gọi file icon riêng độc lập -->
-<link rel="apple-touch-icon" href="icon.svg">
-
-<!-- Manifest nhúng trực tiếp báo hiệu app chạy độc lập (Standalone) -->
-<link class="pwa-manifest" rel="manifest" href="data:application/manifest+json,{%22name%22:%22Premium%20Scoreboard%22,%22short_name%22:%22SCORE%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230f172a%22,%22theme_color%22:%22%230f172a%22}">
+<!-- Cấu hình chuẩn kết nối Manifest và các Icon độc lập -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="icon" href="icon-512.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
