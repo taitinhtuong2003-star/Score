@@ -2,15 +2,15 @@
 <html>
 <head>
 <meta charset="utf-8">
-<!-- Tối ưu hiển thị fullscreen cho iOS -->
+<!-- Cấu hình hiển thị tràn viền và chống zoom cho iOS -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SCORE">
 <title>SCORE - Premium Scoreboard</title>
 
-<!-- Tự động nhúng Manifest làm PWA để ẩn thanh tìm kiếm Safari khi Add to Home Screen -->
-<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Premium%20Scoreboard%22,%22short_name%22:%22SCORE%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230f172a%22,%22theme_color%22:%22%230f172a%22}">
+<!-- Manifest nhúng trực tiếp báo hiệu app chạy độc lập (Standalone) -->
+<link class="pwa-manifest" rel="manifest" href="data:application/manifest+json,{%22name%22:%22Premium%20Scoreboard%22,%22short_name%22:%22SCORE%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230f172a%22,%22theme_color%22:%22%230f172a%22}">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,7 +67,6 @@ body {
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    /* env(safe-area-inset-top) giúp đẩy giao diện xuống dưới Tai thỏ / Dynamic Island khi ẩn thanh tìm kiếm */
     padding: calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
@@ -211,7 +210,7 @@ input.name {
     border: none;
     color: var(--text-main);
     font-weight: 600;
-    font-size: 16px; /* Giữ 16px tiêu chuẩn hệ thống iOS */
+    font-size: 16px; 
     width: 100%;
     padding: 4px 0;
     white-space: nowrap;
@@ -466,7 +465,7 @@ function render(isNewCardAdded = false) {
         container.innerHTML = `
             <div class="swipe-backend" onclick="triggerDelete(${index})">
                 <div class="swipe-backend-content">
-                    <svg style="width:18px;height:18px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                    <svg style="width:18px;height:18px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 8,19V7H6V19Z"/></svg>
                     <span>Xóa</span>
                 </div>
             </div>
@@ -687,7 +686,7 @@ function resetScores() {
     }
 }
 
-/* CHẶN ZOOM TOÀN DIỆN CHO TRÌNH DUYỆT */
+/* CHẶN ZOOM CỬ CHỈ */
 document.addEventListener('gesturestart', function(e) {
     e.preventDefault();
 }, false);
@@ -704,6 +703,15 @@ document.addEventListener('touchend', (e) => {
 }, false);
 
 render();
+
+/* KÍCH HOẠT SERVICE WORKER ĐỂ ẨN TRÌNH DUYỆT TRÊN IOS */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(() => {
+        console.log('Service Worker Registered');
+    }).catch((err) => {
+        console.log('Service Worker Failed', err);
+    });
+}
 </script>
 
 </body>
