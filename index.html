@@ -8,369 +8,72 @@
 <meta name="apple-mobile-web-app-title" content="SCORE">
 <title>SCORE - Billiards Scoreboard</title>
 
-<!-- Đã thêm mã phá cache (?v=2) để ép iPhone nhận diện đúng Icon mới -->
-<link rel="manifest" href="manifest.json?v=2">
-<link rel="apple-touch-icon" href="icon-512.png?v=2">
+<!-- Đã cập nhật v3 để ép trình duyệt load code mới -->
+<link rel="manifest" href="manifest.json?v=3">
+<link rel="apple-touch-icon" href="icon-512.png?v=3">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght=400;500;600;800&display=swap" rel="stylesheet">
 
 <style>
-body.light-theme {
-    --bg-gradient: linear-gradient(145deg, #f1f5f9 0%, #f8fafc 100%);
-    --card-bg: rgba(255, 255, 255, 0.55);
-    --card-border: rgba(255, 255, 255, 0.7);
-    --card-shadow: 0 10px 40px -10px rgba(148, 163, 184, 0.12);
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --btn-theme-bg: rgba(255, 255, 255, 0.7);
-    --btn-control-bg: rgba(15, 23, 42, 0.04);
-    --btn-control-text: #0f172a;
-    --dialog-bg: rgba(255, 255, 255, 0.9);
-}
-
-body.dark-theme {
-    --bg-gradient: linear-gradient(145deg, #090d16 0%, #0f172a 100%);
-    --card-bg: rgba(30, 41, 59, 0.35);
-    --card-border: rgba(255, 255, 255, 0.04);
-    --card-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.4);
-    --text-main: #f8fafc;
-    --text-muted: #64748b;
-    --btn-theme-bg: rgba(255, 255, 255, 0.04);
-    --btn-control-bg: rgba(255, 255, 255, 0.06);
-    --btn-control-text: #f8fafc;
-    --dialog-bg: rgba(15, 23, 42, 0.95);
-}
-
-* { 
-    box-sizing: border-box; 
-    -webkit-tap-highlight-color: transparent; 
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-body {
-    margin: 0;
-    background: var(--bg-gradient);
-    background-attachment: fixed;
-    color: var(--text-main);
-    height: 100vh;
-    overflow: hidden;
-    font-family: 'Outfit', sans-serif;
-    position: fixed; 
-    width: 100%;
-}
-
-.wrap {
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-    padding: calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-.top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-    flex-shrink: 0;
-}
-.top h1 {
-    margin: 0;
-    font-weight: 800;
-    font-size: 30px;
-    letter-spacing: -0.8px;
-    background: linear-gradient(135deg, #4f46e5 0%, #c084fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+body.light-theme { --bg-gradient: linear-gradient(145deg, #f1f5f9 0%, #f8fafc 100%); --card-bg: rgba(255, 255, 255, 0.55); --card-border: rgba(255, 255, 255, 0.7); --card-shadow: 0 10px 40px -10px rgba(148, 163, 184, 0.12); --text-main: #0f172a; --text-muted: #64748b; --btn-theme-bg: rgba(255, 255, 255, 0.7); --btn-control-bg: rgba(15, 23, 42, 0.04); --btn-control-text: #0f172a; --dialog-bg: rgba(255, 255, 255, 0.9); }
+body.dark-theme { --bg-gradient: linear-gradient(145deg, #090d16 0%, #0f172a 100%); --card-bg: rgba(30, 41, 59, 0.35); --card-border: rgba(255, 255, 255, 0.04); --card-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.4); --text-main: #f8fafc; --text-muted: #64748b; --btn-theme-bg: rgba(255, 255, 255, 0.04); --btn-control-bg: rgba(255, 255, 255, 0.06); --btn-control-text: #f8fafc; --dialog-bg: rgba(15, 23, 42, 0.95); }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+body { margin: 0; background: var(--bg-gradient); background-attachment: fixed; color: var(--text-main); height: 100vh; overflow: hidden; font-family: 'Outfit', sans-serif; position: fixed; width: 100%; }
+.wrap { width: 100%; max-width: 480px; margin: 0 auto; padding: calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; height: 100vh; }
+.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-shrink: 0; }
+.top h1 { margin: 0; font-weight: 800; font-size: 30px; letter-spacing: -0.8px; background: linear-gradient(135deg, #4f46e5 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .top-actions { display: flex; gap: 12px; align-items: center; }
-
-.theme-toggle {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1px solid var(--card-border);
-    background: var(--btn-theme-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: var(--text-main);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s, transform 0.1s;
-}
-
-.btn-add {
-    height: 42px;
-    padding: 0 16px;
-    border: none;
-    border-radius: 30px;
-    background: var(--text-main);
-    color: var(--bg-gradient);
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: transform 0.1s, opacity 0.2s;
-}
+.theme-toggle { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--card-border); background: var(--btn-theme-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s, transform 0.1s; }
+.btn-add { height: 42px; padding: 0 16px; border: none; border-radius: 30px; background: var(--text-main); color: var(--bg-gradient); font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: transform 0.1s, opacity 0.2s; }
 body.light-theme .btn-add { background: #0f172a; color: #ffffff; }
 body.dark-theme .btn-add { background: #f8fafc; color: #0f172a; }
 .btn-add:active, .theme-toggle:active { transform: scale(0.94); }
-
-#list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px; 
-    flex: 1;
-    margin-bottom: 24px;
-    overflow-y: auto;
-    scrollbar-width: none;
-}
+#list { display: flex; flex-direction: column; gap: 14px; flex: 1; margin-bottom: 24px; overflow-y: auto; scrollbar-width: none; }
 #list::-webkit-scrollbar { display: none; }
-
-.swipe-container {
-    position: relative;
-    width: 100%;
-    border-radius: 20px;
-    overflow: hidden;
-    flex: 1;
-    min-height: 84px; 
-    box-shadow: var(--card-shadow);
-    touch-action: pan-y;
-    will-change: transform, opacity;
-}
-
-.card-spawn {
-    animation: springIn 0.5s cubic-bezier(0.25, 1.25, 0.4, 1) forwards;
-}
-@keyframes springIn {
-    0% { opacity: 0; transform: translateY(30px) scale(0.92); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.swipe-backend {
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background: #ef4444;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 26px;
-    z-index: 1;
-    border-radius: 20px;
-}
-.swipe-backend-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    font-weight: 600;
-    font-size: 12px;
-    gap: 4px;
-}
-
-.card {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--card-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    z-index: 2;
-    transform: translateX(0px);
-    transition: transform 0.4s cubic-bezier(0.25, 1.15, 0.35, 1.15), background 0.3s, border-color 0.3s;
-}
+.swipe-container { position: relative; width: 100%; border-radius: 20px; overflow: hidden; flex: 1; min-height: 84px; box-shadow: var(--card-shadow); touch-action: pan-y; will-change: transform, opacity; }
+.card-spawn { animation: springIn 0.5s cubic-bezier(0.25, 1.25, 0.4, 1) forwards; }
+@keyframes springIn { 0% { opacity: 0; transform: translateY(30px) scale(0.92); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+.swipe-backend { position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: #ef4444; display: flex; justify-content: flex-end; align-items: center; padding-right: 26px; z-index: 1; border-radius: 20px; }
+.swipe-backend-content { display: flex; flex-direction: column; align-items: center; color: white; font-weight: 600; font-size: 12px; gap: 4px; }
+.card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 20px; padding: 0 24px; display: flex; align-items: center; z-index: 2; transform: translateX(0px); transition: transform 0.4s cubic-bezier(0.25, 1.15, 0.35, 1.15), background 0.3s, border-color 0.3s; }
 .card.swiping { transition: none; }
-
 .player-info { width: 42%; min-width: 0; }
-
-input.name {
-    background: none;
-    border: none;
-    color: var(--text-main);
-    font-weight: 600;
-    font-size: 16px; 
-    width: 100%;
-    padding: 4px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    user-select: text;
-    -webkit-user-select: text;
-}
+input.name { background: none; border: none; color: var(--text-main); font-weight: 600; font-size: 16px; width: 100%; padding: 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; user-select: text; -webkit-user-select: text; }
 input.name:focus { outline: none; }
-
-.inline-controls {
-    width: 58%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.inline-controls button {
-    width: clamp(38px, 5vh, 44px);
-    height: clamp(38px, 5vh, 44px);
-    border: none;
-    background: var(--btn-control-bg);
-    color: var(--btn-control-text);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: transform 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
+.inline-controls { width: 58%; display: flex; align-items: center; justify-content: space-between; }
+.inline-controls button { width: clamp(38px, 5vh, 44px); height: clamp(38px, 5vh, 44px); border: none; background: var(--btn-control-bg); color: var(--btn-control-text); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.1s cubic-bezier(0.25, 0.8, 0.25, 1); }
 .inline-controls button:active { transform: scale(0.85); }
-
-.score {
-    flex: 1;
-    text-align: center;
-    font-weight: 800;
-    font-size: clamp(32px, 5vh, 42px);
-    line-height: 1;
-    letter-spacing: -1px;
-    will-change: transform;
-}
+.score { flex: 1; text-align: center; font-weight: 800; font-size: clamp(32px, 5vh, 42px); line-height: 1; letter-spacing: -1px; will-change: transform; }
 .score-up { animation: springPopUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.5) forwards; }
 .score-down { animation: springPopDown 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.5) forwards; }
-
-@keyframes springPopUp {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.22) translateY(-4px); color: #10b981; }
-    100% { transform: scale(1); }
-}
-@keyframes springPopDown {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.18) translateY(4px); color: #ef4444; }
-    100% { transform: scale(1); }
-}
-
-.total {
-    width: 100%;
-    background: var(--card-bg);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--card-border);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    z-index: 10;
-    border-radius: 24px;
-    flex-shrink: 0;
-}
-.total-label {
-    font-weight: 500;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.glow-circle {
-    min-width: 110px;
-    height: 34px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.big { 
-    font-weight: 800;
-    font-size: 26px; 
-    letter-spacing: -0.5px;
-    will-change: transform;
-}
+@keyframes springPopUp { 0% { transform: scale(1); } 50% { transform: scale(1.22) translateY(-4px); color: #10b981; } 100% { transform: scale(1); } }
+@keyframes springPopDown { 0% { transform: scale(1); } 50% { transform: scale(1.18) translateY(4px); color: #ef4444; } 100% { transform: scale(1); } }
+.total { width: 100%; background: var(--card-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--card-border); padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 10; border-radius: 24px; flex-shrink: 0; }
+.total-label { font-weight: 500; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.glow-circle { min-width: 110px; height: 34px; display: flex; justify-content: center; align-items: center; }
+.big { font-weight: 800; font-size: 26px; letter-spacing: -0.5px; will-change: transform; }
 .big-pop { animation: totalSpring 0.35s cubic-bezier(0.25, 1.4, 0.5, 1.4) forwards; }
-
-@keyframes totalSpring {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.25); }
-    100% { transform: scale(1); }
-}
-
-.total button {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 16px;
-    border-radius: 20px;
-    transition: color 0.2s, background 0.2s;
-}
+@keyframes totalSpring { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.total button { background: none; border: none; color: var(--text-muted); font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 20px; transition: color 0.2s, background 0.2s; }
 .total button:active { color: #ef4444; background: rgba(239, 68, 68, 0.06); }
-
 .reset-flash { animation: flashEffect 0.4s ease-out forwards; }
-@keyframes flashEffect {
-    0% { opacity: 0.3; transform: scale(0.98); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-.overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-}
+@keyframes flashEffect { 0% { opacity: 0.3; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
+.overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .overlay.active { opacity: 1; pointer-events: auto; }
-
-.dialog {
-    background: var(--dialog-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 24px;
-    padding: 26px;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-    box-shadow: var(--card-shadow);
-    transform: scale(0.9);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+.dialog { background: var(--dialog-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 26px; width: 100%; max-width: 320px; text-align: center; box-shadow: var(--card-shadow); transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .overlay.active .dialog { transform: scale(1); }
-
-.dialog-msg {
-    font-weight: 600;
-    font-size: 17px;
-    color: var(--text-main);
-    margin-bottom: 22px;
-    line-height: 1.4;
-}
+.dialog-msg { font-weight: 600; font-size: 17px; color: var(--text-main); margin-bottom: 22px; line-height: 1.4; }
 .dialog-btns { display: flex; gap: 12px; }
-.dialog-btns button {
-    flex: 1; height: 44px; border: none; border-radius: 14px;
-    font-weight: 600; font-size: 14px; cursor: pointer;
-}
+.dialog-btns button { flex: 1; height: 44px; border: none; border-radius: 14px; font-weight: 600; font-size: 14px; cursor: pointer; }
 .btn-cancel { background: rgba(0, 0, 0, 0.04); color: var(--text-main); }
 body.dark-theme .btn-cancel { background: rgba(255, 255, 255, 0.06); }
 .btn-confirm-del { background: #ef4444; color: white; }
-
 .icon { width: 18px; height: 18px; fill: currentColor; }
+/* MỚI: CSS cho hiệu ứng Emoji */
+.pop-emoji { position: absolute; font-size: 24px; pointer-events: none; z-index: 999; animation: floatUp 0.8s ease-out forwards; }
+@keyframes floatUp { 0% { opacity: 0; transform: translateY(0) scale(0.5); } 50% { opacity: 1; transform: translateY(-30px) scale(1.2); } 100% { opacity: 0; transform: translateY(-60px) scale(1); } }
 </style>
 </head>
 <body class="light-theme">
@@ -413,269 +116,64 @@ body.dark-theme .btn-cancel { background: rgba(255, 255, 255, 0.06); }
 let players = [{ name: "Cơ thủ 1", score: 0 }, { name: "Cơ thủ 2", score: 0 }];
 let activeSwipedIdx = null;
 const maxSwipeDist = 84;
-
 let repeatInterval = null;
 let repeatTimeout = null;
 
 if (localStorage.bida_theme) document.body.className = localStorage.bida_theme;
-if (localStorage.bida_players) {
-    try { players = JSON.parse(localStorage.bida_players); } catch(e) {}
-}
+if (localStorage.bida_players) { try { players = JSON.parse(localStorage.bida_players); } catch(e) {} }
 
-function save() {
-    localStorage.bida_players = JSON.stringify(players);
-    localStorage.bida_theme = document.body.className;
-}
-
-function toggleTheme() {
-    document.body.className = document.body.classList.contains('light-theme') ? 'dark-theme' : 'light-theme';
-    updateThemeIcon();
-    save();
-}
-
-function updateThemeIcon() {
-    const isDark = document.body.classList.contains('dark-theme');
-    const themeBtn = document.getElementById('themeBtn');
-    if (!themeBtn) return;
-    themeBtn.innerHTML = isDark ? 
-        `<svg class="icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1z"/></svg>` : 
-        `<svg class="icon" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>`;
-}
+function save() { localStorage.bida_players = JSON.stringify(players); localStorage.bida_theme = document.body.className; }
+function toggleTheme() { document.body.className = document.body.classList.contains('light-theme') ? 'dark-theme' : 'light-theme'; updateThemeIcon(); save(); }
+function updateThemeIcon() { const isDark = document.body.classList.contains('dark-theme'); const themeBtn = document.getElementById('themeBtn'); if (!themeBtn) return; themeBtn.innerHTML = isDark ? `<svg class="icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1z"/></svg>` : `<svg class="icon" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>`; }
 
 function render(isNewCardAdded = false) {
     const listNode = document.getElementById('list');
-    if (!listNode) return;
-    listNode.innerHTML = '';
-    updateThemeIcon();
-
+    if (!listNode) return; listNode.innerHTML = ''; updateThemeIcon();
     players.forEach((player, index) => {
         const container = document.createElement('div');
         container.className = `swipe-container ${isNewCardAdded && index === players.length - 1 ? 'card-spawn' : ''}`;
         container.id = `container-${index}`;
-
-        container.innerHTML = `
-            <div class="swipe-backend" onclick="triggerDelete(${index})">
-                <div class="swipe-backend-content">
-                    <svg style="width:18px;height:18px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 8,19V7H6V19Z"/></svg>
-                    <span>Xóa</span>
-                </div>
-            </div>
-            <div class="card" id="card-${index}">
-                <div class="player-info">
-                    <input class="name" value="${player.name}" oninput="updateName(${index}, this.value)" placeholder="Cơ thủ">
-                </div>
-                <div class="inline-controls">
-                    <button class="m" id="btn-m-${index}">
-                        <svg style="width:20px;height:20px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13H5v-2h14v2z"/></svg>
-                    </button>
-                    <div class="score" id="score-${index}">
-                        ${player.score > 0 ? '+' : ''}${player.score}
-                    </div>
-                    <button class="p" id="btn-p-${index}">
-                        <svg style="width:20px;height:20px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg>
-                    </button>
-                </div>
-            </div>
-        `;
-
+        container.innerHTML = `<div class="swipe-backend" onclick="triggerDelete(${index})"><div class="swipe-backend-content"><svg style="width:18px;height:18px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 8,19V7H6V19Z"/></svg><span>Xóa</span></div></div><div class="card" id="card-${index}"><div class="player-info"><input class="name" value="${player.name}" oninput="updateName(${index}, this.value)" placeholder="Cơ thủ"></div><div class="inline-controls"><button class="m" id="btn-m-${index}"><svg style="width:20px;height:20px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19 13H5v-2h14v2z"/></svg></button><div class="score" id="score-${index}">${player.score > 0 ? '+' : ''}${player.score}</div><button class="p" id="btn-p-${index}"><svg style="width:20px;height:20px;" viewBox="0 0 24 24"><path fill="currentColor" d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11Z"/></svg></button></div></div>`;
         listNode.appendChild(container);
         setupSwipeEvents(index);
-        setupHoldEvents(index, 1);  
-        setupHoldEvents(index, -1); 
+        setupHoldEvents(index, 1); setupHoldEvents(index, -1);
     });
-
-    updateTotalScore(false);
-    activeSwipedIdx = null;
+    updateTotalScore(false); activeSwipedIdx = null;
 }
 
-function updateName(index, val) {
-    players[index].name = val;
-    save();
-}
+function updateName(index, val) { players[index].name = val; save(); }
 
 function changeScore(index, value) {
-    if (window.navigator && window.navigator.vibrate) {
-        window.navigator.vibrate(10);
-    }
-
-    players[index].score += value;
-    save();
-
+    if (window.navigator && window.navigator.vibrate) window.navigator.vibrate(10);
+    players[index].score += value; save();
     const scoreNode = document.getElementById(`score-${index}`);
-    if (scoreNode) {
-        scoreNode.innerText = (players[index].score > 0 ? '+' : '') + players[index].score;
-        const animClass = value > 0 ? 'score-up' : 'score-down';
-        scoreNode.classList.remove('score-up', 'score-down');
-        void scoreNode.offsetWidth; 
-        scoreNode.classList.add(animClass);
-    }
+    if (scoreNode) { scoreNode.innerText = (players[index].score > 0 ? '+' : '') + players[index].score; const animClass = value > 0 ? 'score-up' : 'score-down'; scoreNode.classList.remove('score-up', 'score-down'); void scoreNode.offsetWidth; scoreNode.classList.add(animClass); }
+    const btn = document.getElementById(value > 0 ? `btn-p-${index}` : `btn-m-${index}`);
+    if (btn) { const emoji = document.createElement('div'); emoji.className = 'pop-emoji'; emoji.innerText = value > 0 ? '😊' : '😭'; const rect = btn.getBoundingClientRect(); emoji.style.left = (rect.left + rect.width / 2 - 12) + 'px'; emoji.style.top = (rect.top - 20) + 'px'; document.body.appendChild(emoji); setTimeout(() => emoji.remove(), 800); }
     updateTotalScore(true);
 }
 
 function setupHoldEvents(index, direction) {
     const btn = document.getElementById(direction > 0 ? `btn-p-${index}` : `btn-m-${index}`);
     if (!btn) return;
-
-    const startAction = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closeActiveSwipe();
-        changeScore(index, direction);
-        repeatTimeout = setTimeout(() => {
-            repeatInterval = setInterval(() => { changeScore(index, direction); }, 80);
-        }, 400);
-    };
-
-    const stopAction = () => {
-        clearTimeout(repeatTimeout);
-        clearInterval(repeatInterval);
-    };
-
-    btn.addEventListener('touchstart', startAction, { passive: false });
-    btn.addEventListener('touchend', stopAction, { passive: true });
-    btn.addEventListener('touchcancel', stopAction, { passive: true });
-    btn.addEventListener('mousedown', startAction);
-    btn.addEventListener('mouseup', stopAction);
-    btn.addEventListener('mouseleave', stopAction);
+    const startAction = (e) => { e.preventDefault(); e.stopPropagation(); closeActiveSwipe(); changeScore(index, direction); repeatTimeout = setTimeout(() => { repeatInterval = setInterval(() => { changeScore(index, direction); }, 80); }, 400); };
+    const stopAction = () => { clearTimeout(repeatTimeout); clearInterval(repeatInterval); };
+    btn.addEventListener('touchstart', startAction, { passive: false }); btn.addEventListener('touchend', stopAction, { passive: true }); btn.addEventListener('touchcancel', stopAction, { passive: true }); btn.addEventListener('mousedown', startAction); btn.addEventListener('mouseup', stopAction); btn.addEventListener('mouseleave', stopAction);
 }
 
-function updateTotalScore(animate) {
-    const total = players.reduce((sum, p) => sum + p.score, 0);
-    const totalNode = document.getElementById('tot');
-    if (!totalNode) return;
-    totalNode.innerText = total;
-    if (animate) {
-        totalNode.classList.remove('big-pop');
-        void totalNode.offsetWidth;
-        totalNode.classList.add('big-pop');
-    }
-}
-
-function addPlayer() {
-    closeActiveSwipe();
-    players.push({ name: 'Cơ thủ ' + (players.length + 1), score: 0 });
-    render(true);
-    save();
-    setTimeout(() => {
-        const listNode = document.getElementById('list');
-        if (listNode) listNode.scrollTo({ top: listNode.scrollHeight, behavior: 'smooth' });
-    }, 60);
-}
-
-function setupSwipeEvents(index) {
-    const card = document.getElementById(`card-${index}`);
-    if (!card) return;
-    let startX = 0, currentX = 0, isSwiping = false, initialTranslateX = 0;
-
-    card.addEventListener('touchstart', (e) => {
-        if(e.target.tagName === 'INPUT' || e.target.closest('button')) return;
-        if (activeSwipedIdx !== null && activeSwipedIdx !== index) closeActiveSwipe();
-        startX = e.touches[0].clientX;
-        initialTranslateX = activeSwipedIdx === index ? -maxSwipeDist : 0;
-        card.classList.add('swiping');
-        isSwiping = true;
-    }, { passive: true });
-
-    card.addEventListener('touchmove', (e) => {
-        if (!isSwiping) return;
-        currentX = e.touches[0].clientX;
-        let diffX = currentX - startX + initialTranslateX;
-        if (diffX > 0) diffX = 0;
-        if (diffX < -maxSwipeDist) diffX = -maxSwipeDist + (diffX + maxSwipeDist) * 0.25; 
-        card.style.transform = `translateX(${diffX}px)`;
-    }, { passive: true });
-
-    card.addEventListener('touchend', () => {
-        if (!isSwiping) return;
-        card.classList.remove('swiping');
-        isSwiping = false;
-        let finalX = currentX - startX + initialTranslateX;
-        if (finalX < -40) {
-            card.style.transform = `translateX(-${maxSwipeDist}px)`;
-            activeSwipedIdx = index;
-        } else {
-            card.style.transform = 'translateX(0px)';
-            if (activeSwipedIdx === index) activeSwipedIdx = null;
-        }
-    });
-}
-
-function closeActiveSwipe() {
-    if (activeSwipedIdx !== null) {
-        const card = document.getElementById(`card-${activeSwipedIdx}`);
-        if (card) card.style.transform = 'translateX(0px)';
-        activeSwipedIdx = null;
-    }
-}
-
-document.addEventListener('touchstart', (e) => {
-    if (activeSwipedIdx !== null) {
-        const container = document.getElementById(`container-${activeSwipedIdx}`);
-        if (container && !container.contains(e.target)) closeActiveSwipe();
-    }
-}, { passive: true });
-
+function updateTotalScore(animate) { const total = players.reduce((sum, p) => sum + p.score, 0); const totalNode = document.getElementById('tot'); if (!totalNode) return; totalNode.innerText = total; if (animate) { totalNode.classList.remove('big-pop'); void totalNode.offsetWidth; totalNode.classList.add('big-pop'); } }
+function addPlayer() { closeActiveSwipe(); players.push({ name: 'Cơ thủ ' + (players.length + 1), score: 0 }); render(true); save(); setTimeout(() => { const listNode = document.getElementById('list'); if (listNode) listNode.scrollTo({ top: listNode.scrollHeight, behavior: 'smooth' }); }, 60); }
+function setupSwipeEvents(index) { const card = document.getElementById(`card-${index}`); if (!card) return; let startX = 0, currentX = 0, isSwiping = false, initialTranslateX = 0; card.addEventListener('touchstart', (e) => { if(e.target.tagName === 'INPUT' || e.target.closest('button')) return; if (activeSwipedIdx !== null && activeSwipedIdx !== index) closeActiveSwipe(); startX = e.touches[0].clientX; initialTranslateX = activeSwipedIdx === index ? -maxSwipeDist : 0; card.classList.add('swiping'); isSwiping = true; }, { passive: true }); card.addEventListener('touchmove', (e) => { if (!isSwiping) return; currentX = e.touches[0].clientX; let diffX = currentX - startX + initialTranslateX; if (diffX > 0) diffX = 0; if (diffX < -maxSwipeDist) diffX = -maxSwipeDist + (diffX + maxSwipeDist) * 0.25; card.style.transform = `translateX(${diffX}px)`; }, { passive: true }); card.addEventListener('touchend', () => { if (!isSwiping) return; card.classList.remove('swiping'); isSwiping = false; let finalX = currentX - startX + initialTranslateX; if (finalX < -40) { card.style.transform = `translateX(-${maxSwipeDist}px)`; activeSwipedIdx = index; } else { card.style.transform = 'translateX(0px)'; if (activeSwipedIdx === index) activeSwipedIdx = null; } }); }
+function closeActiveSwipe() { if (activeSwipedIdx !== null) { const card = document.getElementById(`card-${activeSwipedIdx}`); if (card) card.style.transform = 'translateX(0px)'; activeSwipedIdx = null; } }
+document.addEventListener('touchstart', (e) => { if (activeSwipedIdx !== null) { const container = document.getElementById(`container-${activeSwipedIdx}`); if (container && !container.contains(e.target)) closeActiveSwipe(); } }, { passive: true });
 let pendingDeleteIndex = null;
-function triggerDelete(index) {
-    pendingDeleteIndex = index;
-    const overlay = document.getElementById('confirmOverlay');
-    if (!overlay) return;
-    document.getElementById('confirmMsg').innerText = `Bạn có chắc muốn xóa "${players[index].name}" không?`;
-    overlay.classList.add('active');
-
-    document.getElementById('executeDelBtn').onclick = () => {
-        const container = document.getElementById(`container-${pendingDeleteIndex}`);
-        if(container) {
-            container.style.transition = "all 0.35s cubic-bezier(0.4, 0, 1, 1)";
-            container.style.opacity = "0";
-            container.style.transform = "scale(0.8) translateY(-20px)";
-            container.style.height = "0px"; container.style.minHeight = "0px"; container.style.marginBottom = "-14px";
-        }
-        setTimeout(() => {
-            players.splice(pendingDeleteIndex, 1);
-            save(); render(); closeConfirmDialog(null, true);
-        }, 320);
-    };
-}
-
-function closeConfirmDialog(event, isDeleted) {
-    if (event && event.target !== document.getElementById('confirmOverlay')) return;
-    const overlay = document.getElementById('confirmOverlay');
-    if (overlay) overlay.classList.remove('active');
-    if(!isDeleted) closeActiveSwipe();
-    pendingDeleteIndex = null;
-}
-
-function resetScores() {
-    closeActiveSwipe();
-    if(confirm("Làm mới lại toàn bộ điểm số trận đấu?")) {
-        const listNode = document.getElementById('list');
-        if (!listNode) return;
-        listNode.classList.add('reset-flash');
-        players.forEach(p => p.score = 0);
-        save();
-        setTimeout(() => {
-            render();
-            listNode.classList.remove('reset-flash');
-        }, 400);
-    }
-}
-
+function triggerDelete(index) { pendingDeleteIndex = index; const overlay = document.getElementById('confirmOverlay'); if (!overlay) return; document.getElementById('confirmMsg').innerText = `Bạn có chắc muốn xóa "${players[index].name}" không?`; overlay.classList.add('active'); document.getElementById('executeDelBtn').onclick = () => { const container = document.getElementById(`container-${pendingDeleteIndex}`); if(container) { container.style.transition = "all 0.35s cubic-bezier(0.4, 0, 1, 1)"; container.style.opacity = "0"; container.style.transform = "scale(0.8) translateY(-20px)"; container.style.height = "0px"; container.style.minHeight = "0px"; container.style.marginBottom = "-14px"; } setTimeout(() => { players.splice(pendingDeleteIndex, 1); save(); render(); closeConfirmDialog(null, true); }, 320); }; }
+function closeConfirmDialog(event, isDeleted) { if (event && event.target !== document.getElementById('confirmOverlay')) return; const overlay = document.getElementById('confirmOverlay'); if (overlay) overlay.classList.remove('active'); if(!isDeleted) closeActiveSwipe(); pendingDeleteIndex = null; }
+function resetScores() { closeActiveSwipe(); if(confirm("Làm mới lại toàn bộ điểm số trận đấu?")) { const listNode = document.getElementById('list'); if (!listNode) return; listNode.classList.add('reset-flash'); players.forEach(p => p.score = 0); save(); setTimeout(() => { render(); listNode.classList.remove('reset-flash'); }, 400); } }
 document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, false);
-let lastTouchEnd = 0;
-document.addEventListener('touchend', (e) => {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 250) { if (e.target.tagName !== 'INPUT') e.preventDefault(); }
-    lastTouchEnd = now;
-}, false);
-
+let lastTouchEnd = 0; document.addEventListener('touchend', (e) => { const now = (new Date()).getTime(); if (now - lastTouchEnd <= 250) { if (e.target.tagName !== 'INPUT') e.preventDefault(); } lastTouchEnd = now; }, false);
 render();
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js?v=2').then(() => {
-        console.log('Service Worker Registered');
-    }).catch((err) => { console.log('Service Worker Failed', err); });
-}
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js?v=3').then(() => { console.log('Service Worker Registered'); }).catch((err) => { console.log('Service Worker Failed', err); }); }
 </script>
 </body>
 </html>
